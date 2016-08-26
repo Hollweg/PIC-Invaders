@@ -45,21 +45,19 @@ short Boss_teste = 0b00000000;                              // Variavel criada p
 // -------------------------------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------  Inicio Definicoes Caracteres especiais ----------------------------------------------------------
 
-void CustomChar () {
+void CustomChar(){
 
-  const char character1[] = {0,24,4,22,22,4,24,0};           //Space Invaders nave
-  const char character2[] = {0,0,6,12,6,0,0,0};              //Space Invaders Nave Inmiga 1
-  const char character3[] = {0,3,6,10,6,3,0,0};              //Space Invaders Nave Inmiga 2
-  const char character4[] = {0,0,17,10,4,10,17,0};           //Space Invaders Explosao
-  const char character5[] = {0,0,4,4,31,4,4,0};              //Space Invaders Explosao 2
-  const char character6[] = {0,0,0,14,14,0,0,0};             //Space Invaders Tiro de nave
-  const char character7[] = {5,6,14,28,28,14,6,5};           //Space Invaders Nave Inmiga 3
-  const char character8[] = {6,12,12,28,28,12,12,6};         //Boss
-  //const char character9[] = {15,15,7,6,4,28,6,3};          //Space Invaders Tiro Special
+    const char character1[] = {0,24,4,22,22,4,24,0};           //Space Invaders nave
+    const char character2[] = {0,0,6,12,6,0,0,0};              //Space Invaders Nave Inmiga 1
+    const char character3[] = {0,3,6,10,6,3,0,0};              //Space Invaders Nave Inmiga 2
+    const char character4[] = {0,0,17,10,4,10,17,0};           //Space Invaders Explosao
+    const char character5[] = {0,0,4,4,31,4,4,0};              //Space Invaders Explosao 2
+    const char character6[] = {0,0,0,14,14,0,0,0};             //Space Invaders Tiro de nave
+    const char character7[] = {5,6,14,28,28,14,6,5};           //Space Invaders Nave Inmiga 3
+    const char character8[] = {6,12,12,28,28,12,12,6};         //Boss
+    //const char character9[] = {15,15,7,6,4,28,6,3};          //Space Invaders Tiro Special
 
-
-
-  char i;
+    char i;
     Lcd_Cmd(64);
     for (i = 0; i<=7; i++) Lcd_Chr_CP(character1[i]);
     for (i = 0; i<=7; i++) Lcd_Chr_CP(character2[i]);
@@ -69,9 +67,9 @@ void CustomChar () {
     for (i = 0; i<=7; i++) Lcd_Chr_CP(character6[i]);
     for (i = 0; i<=7; i++) Lcd_Chr_CP(character7[i]);
     for (i = 0; i<=7; i++) Lcd_Chr_CP(character8[i]);
-  //for (i = 0; i<=7; i++) Lcd_Chr_CP(character9[i]);
+    //for (i = 0; i<=7; i++) Lcd_Chr_CP(character9[i]);
 
-                     }
+}
 
 // -------------------------------------------------------- Final Definicoes Caracteres Especiais --------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,17 +80,15 @@ void CustomChar () {
 
 
 void apaga_ram(){
-                                                         //Funcao Responsavel por limpar os valores do bank 1 e 2 da memória do PIC
-char *ponteiro_apaga, contador;                          //De forma a resetar o microcontrolador, a fim de ser um reset por software
-                                                         //rá´pido e prático
-ponteiro_apaga = (char) 0x00;                            //Bank 1 - Valor Inicial
-
-for(contador=0;contador<0x00;contador++)
+                                                             //Funcao Responsavel por limpar os valores do bank 1 e 2 da memória do PIC
+    char *ponteiro_apaga, contador;                          //De forma a resetar o microcontrolador, a fim de ser um reset por software
+    ponteiro_apaga = (char) 0x00;                            //Bank 1 - Valor Inicial
+    
+    for(contador=0;contador<0x00;contador++)
         *ponteiro_apaga++ = 0;
 
-ponteiro_apaga = (char ) 0x100;                          // Bank 2 - Valor Inicial
-
-for(contador=0;contador<0x100;contador++)
+    ponteiro_apaga = (char ) 0x100;                          // Bank 2 - Valor Inicial
+    for(contador=0;contador<0x100;contador++)
         *ponteiro_apaga++ = 0;
 
 /*os bancos 2 e 3 tem pouquissimos bytes em qualquer pic, e podem ser descartados*/
@@ -105,32 +101,31 @@ for(contador=0;contador<0x100;contador++)
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------- Inicio Funcao Gera Random. ----------------------------------------------------------------
 
-int random () {
+int random(){
 
-int alea, random;
-char randomico;
+    int alea, random;
+    char randomico;
+    srand (randomico);                                   //gera numero aleatorio toda vez q executar o programa
+    alea = rand()%255;                                   //%255 gera de 0  a 255 ai você define o valor q quiser
 
-srand (randomico);                                   //gera numero aleatorio toda vez q executar o programa
-alea = rand()%255;                                   //%255 gera de 0  a 255 ai você define o valor q quiser
+    if ((alea>= 0) && (alea<50))                         // Divide o numero char em 6 posiçoes, de forma com que de acordo com o numero
+        random = 1;                                      // randomico gerado, ele entra em um uma ordem "randomica pré definida"
+                                                         // no main da funçao
+    else if ((alea>= 50) && (alea<100))
+        random = 2;
 
-if ((alea>= 0) && (alea<50))                         // Divide o numero char em 6 posiçoes, de forma com que de acordo com o numero
-       random = 1;                                   // randomico gerado, ele entra em um uma ordem "randomica pré definida"
-                                                     // no main da funçao
-else if ((alea>= 50) && (alea<100))
-       random = 2;
+    else if ((alea>= 100) && (alea<150))
+        random = 3;
 
-else if ((alea>= 100) && (alea<150))
-       random = 3;
+    else if ((alea>= 150) && (alea<200))
+        random = 4;
 
-else if ((alea>= 150) && (alea<200))
-       random = 4;
+    else if ((alea>= 200) && (alea<255))
+        random = 5;
 
-else if ((alea>= 200) && (alea<255))
-       random = 5;
+    return random;
 
-return random;
-
-              }
+}
 
 // ---------------------------------------------------------------- Final Funcao Gera Random.------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -138,51 +133,48 @@ return random;
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------- Inicio Funcao Game_Over ------------------------------------------------------------------
 
- int GameOver() {
-                                                                         //Apenas testa posicao
- short j = 0;                                                            // Se essa funcao for chamada, é fim de jogo para o usuario,
-                                                                         //sinal de que deixou uma nave inimiga passar de sua tela
-                                                                         //e posteriormente é jogado Fim de jogo no LCD
-                                                                         //apenas é feita uma animacao na tela
- for (j = 0; j<4; j++){
-
-                                   Lcd_Cmd(_LCD_CLEAR);
-                                   lcd_chr (1, 6, 3);
-                                   lcd_chr (1, 7, 3);
-                                   lcd_chr (1, 8, 3);
-                                   lcd_chr (1, 9, 3);
-                                   lcd_chr (1, 10, 3);
-                                   lcd_chr (2, 6, 3);
-                                   lcd_chr (2, 7, 3);
-                                   lcd_chr (2, 8, 3);
-                                   lcd_chr (2, 9, 3);
-                                   lcd_chr (2, 10, 3);
-                                   delay_ms (500);
-                                   lcd_chr (1, 6, 4);
-                                   lcd_chr (1, 7, 4);
-                                   lcd_chr (1, 8, 4);
-                                   lcd_chr (1, 9, 4);
-                                   lcd_chr (1, 10, 4);
-                                   lcd_chr (2, 6, 4);
-                                   lcd_chr (2, 7, 4);
-                                   lcd_chr (2, 8, 4);
-                                   lcd_chr (2, 9, 4);
-                                   lcd_chr (2, 10, 4);
-                                   delay_ms (700);
-
-                                           }
-                  Lcd_Cmd(_LCD_CLEAR);
-                  Lcd_out (1,3, "GAME OVER!!");
-                  delay_ms(5000);
+int GameOver() {
+                                                                           //Apenas testa posicao. Se essa funcao for chamada, é fim de jogo para o usuario, sinal de que deixou uma nave inimiga passar de sua tela
+    short j = 0;                                                           //e posteriormente é jogado Fim de jogo no LCD. Apenas é feita uma animacao na tela
+    for (j = 0; j<4; j++){
+        Lcd_Cmd(_LCD_CLEAR);
+        lcd_chr (1, 6, 3);
+        lcd_chr (1, 7, 3);
+        lcd_chr (1, 8, 3);
+        lcd_chr (1, 9, 3);
+        lcd_chr (1, 10, 3);
+        lcd_chr (2, 6, 3);
+        lcd_chr (2, 7, 3);
+        lcd_chr (2, 8, 3);
+        lcd_chr (2, 9, 3);
+        lcd_chr (2, 10, 3);
+        delay_ms (500);
+        lcd_chr (1, 6, 4);
+        lcd_chr (1, 7, 4);
+        lcd_chr (1, 8, 4);
+        lcd_chr (1, 9, 4);
+        lcd_chr (1, 10, 4);
+        lcd_chr (2, 6, 4);
+        lcd_chr (2, 7, 4);
+        lcd_chr (2, 8, 4);
+        lcd_chr (2, 9, 4);
+        lcd_chr (2, 10, 4);
+        delay_ms (700);
+    }
+    
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_out (1,3, "GAME OVER!!");
+    delay_ms(5000);
                   
-                  if (boss_teste == 1) {
-                         game_over = 1;
-                         return game_over;
-                                 }
-                  else {
-                      apaga_ram();
-                      return 0;
-                         }
+    if (boss_teste == 1) {
+        game_over = 1;
+        return game_over;
+    }
+
+    else {
+        apaga_ram();
+        return 0;
+    }
 }
 
 // ---------------------------------------------------------- Final Funcao Game_Over  ------------------------------------------------------------------
@@ -193,94 +185,94 @@ return random;
 
 void Win_Game(){
 
-  Lcd_Cmd(_LCD_CLEAR);
-  lcd_chr (1, 16, 3);
-  lcd_chr (2, 16, 3);
-  delay_ms (500);
+    Lcd_Cmd(_LCD_CLEAR);
+    lcd_chr (1, 16, 3);
+    lcd_chr (2, 16, 3);
+    delay_ms (500);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  lcd_chr (1, 16, 4);
-  lcd_chr (2, 16, 4);
-  delay_ms (500);
+    Lcd_Cmd(_LCD_CLEAR);
+    lcd_chr (1, 16, 4);
+    lcd_chr (2, 16, 4);
+    delay_ms (500);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  lcd_chr (1, 16, 3);
-  lcd_chr (2, 16, 3);
-  delay_ms (500);
+    Lcd_Cmd(_LCD_CLEAR);
+    lcd_chr (1, 16, 3);
+    lcd_chr (2, 16, 3);
+    delay_ms (500);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  lcd_chr (1, 16, 4);
-  lcd_chr (2, 16, 4);
-  delay_ms (500);
+    Lcd_Cmd(_LCD_CLEAR);
+    lcd_chr (1, 16, 4);
+    lcd_chr (2, 16, 4);
+    delay_ms (500);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 1, "Apos derrotar");
-  Lcd_Out (2, 2, "As formigas");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 1, "Apos derrotar");
+    Lcd_Out (2, 2, "As formigas");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 2, "Devoradoras de");
-  Lcd_Out (2, 3, "Chocolates");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 2, "Devoradoras de");
+    Lcd_Out (2, 3, "Chocolates");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 3, "Chegamos ao");
-  Lcd_Out (2, 2, "nosso destino.");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 3, "Chegamos ao");
+    Lcd_Out (2, 2, "nosso destino.");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 1, "Assim degustamos");
-  Lcd_Out (2, 3, "Com o Povo do");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 1, "Assim degustamos");
+    Lcd_Out (2, 3, "Com o Povo do");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 2, "Planeta Kripke");
-  Lcd_Out (2, 2, "O Achocolatado");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 2, "Planeta Kripke");
+    Lcd_Out (2, 2, "O Achocolatado");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 2, "Mais Saboroso");
-  Lcd_Out (2, 2, "Belo e Magico");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 2, "Mais Saboroso");
+    Lcd_Out (2, 2, "Belo e Magico");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 4, "de Toda a");
-  Lcd_Out (2, 4, "VIA LACTA!");
-  delay_ms (3000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 4, "de Toda a");
+    Lcd_Out (2, 4, "VIA LACTA!");
+    delay_ms (3000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 3, "Desenvolvido");
-  Lcd_Out (2, 2, "Por Hollweg");
-  delay_ms (4000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 3, "Desenvolvido");
+    Lcd_Out (2, 2, "Por Hollweg");
+    delay_ms (4000);
   
-  Lcd_Cmd(_LCD_CLEAR);
-  Lcd_Out (1, 3, "WEG Studios");
-  Lcd_Out (2, 3, "WEG Bobagens");
-  delay_ms (4000);
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Out (1, 3, "WEG Studios");
+    Lcd_Out (2, 3, "WEG Bobagens");
+    delay_ms (4000);
   
-                }
+}
+
 // ---------------------------------------------------------- Final Funcao Win_Game  ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------- Inicio Funcao Escreve_Nave Principal ----------------------------------------------------------------------
 
-void escreve_enterprise(){                                           // Testa se a nave principal foi mudada de lugar
+void escreve_enterprise(){                                         // Testa se a nave principal foi mudada de lugar
 
-  if (button(&PORTD, 0, 50, 1))    {                                 //Se pressionado bit 0 de PORTD
-                    posicao_nave = 0b00000001;                       //Nave é escrita e é armazenado valor 1 para comparação posterior
-                    armazena_enterprise = 0b00000001;                //Nave Principal escrita na posicao desejada
-                    Lcd_chr (1,1, 0);
-                                   }
+    if (button(&PORTD, 0, 50, 1)){                                 //Se pressionado bit 0 de PORTD
+        posicao_nave = 0b00000001;                                 //Nave é escrita e é armazenado valor 1 para comparação posterior
+        armazena_enterprise = 0b00000001;                          //Nave Principal escrita na posicao desejada
+        Lcd_chr (1,1, 0);
+    }
 
+    else if (button(&PORTD, 1, 50, 1)){                           //Se pressionado bit 1 de PORTD
+        posicao_nave = 0b00000010;                                //Nave é escrita e é armazenado valor 2 para comparação posterior
+        armazena_enterprise = 0b00000010;                         //Nave Principal escrita na posicao desejada
+        Lcd_chr (2,1, 0);
+    }
 
-  else if (button(&PORTD, 1, 50, 1)){                                //Se pressionado bit 1 de PORTD
-                    posicao_nave = 0b00000010;                       //Nave é escrita e é armazenado valor 2 para comparação posterior
-                    armazena_enterprise = 0b00000010;                //Nave Principal escrita na posicao desejada
-                    Lcd_chr (2,1, 0);
-                                     }
-
-                          }
+}
 
 // -------------------------------------------------------------- Final Escreve_Nave Principal ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -289,21 +281,18 @@ void escreve_enterprise(){                                           // Testa se
 // -------------------------------------------------------------------- Chama Enterprise ------------------------------------------------------------------
 
 
-void Chama_Enterprise() {                                                   //Funcao super simples
-                                                                            //Apenas chama a nave principal na tela
-    switch (posicao_nave)  {                                                //de acordo com a ultima posicao de memoria
-                                                                            //switch entre posicao 0 e 1
-                 case (0b00000001):                                         //reescreve na tela de acordo com ultimo endereçamento
-                      Lcd_chr (1,1, 0);                                     //de memoria
-                      break;
+void Chama_Enterprise() {                                                 //Funcao super simples
+                                                                          //Apenas chama a nave principal na tela
+    switch (posicao_nave){                                                //de acordo com a ultima posicao de memoria switch entre posicao 0 e 1
+        case (0b00000001):                                                //reescreve na tela de acordo com ultimo endereçamento
+            Lcd_chr (1,1, 0);                                             //de memoria
+            break;
 
-                 case (0b00000010):
-                      Lcd_chr (2,1, 0);
-                      break;
-
-
-                             }
-                        }
+        case (0b00000010):
+            Lcd_chr (2,1, 0);
+            break;
+    }
+}
 
 // ------------------------------------------------------------- Final Funcao Chama Enterprise --------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -312,334 +301,315 @@ void Chama_Enterprise() {                                                   //Fu
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------- Chama Inimigo ------------------------------------------------------------------
 
-
-
 void Chama_Inimigo() {                                                  //Funcao Chama_Inimigo
                                                                         //Testa em qual posicao foi armazenado o inimigo, e toda
                                                                         //vez que for solicitada, retorna o valor armazenado - 1
                                                                         //de forma a atualizar a tela, de acordo com o necessitado
                                                                         //pelo usuário
-     if (linha1 == 0b00000001){
-          
-           if (armazena_pos_inimigo1 > 0){
-                 
-                    switch (armazena_pos_inimigo1)  {
-
-                             case (0b00001111):
-                                  Lcd_chr (1,15, 1);
-                                  break;                                      //testa primeiro se a variavel que representa inimigo na primeira
+    if (linha1 == 0b00000001){
+        if (armazena_pos_inimigo1 > 0){
+            switch (armazena_pos_inimigo1){
+                case (0b00001111):
+                    Lcd_chr (1,15, 1);
+                    break;                                      //testa primeiro se a variavel que representa inimigo na primeira
                                                                               //linha é maior que um, e entra em uma função que chama a mesma
-                             case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
-                                  Lcd_chr (1,14, 1);                          //que escreve o inimigo em linha 1 ou 2
-                                  break;
-
-                             case (0b00001101):
-                                  Lcd_chr (1,13, 1);
-                                  break;
-
-                             case (0b00001100):
-                                  Lcd_chr (1,12, 1);
-                                  break;
-
-                             case (0b00001011):
-                                  Lcd_chr (1,11, 1);
-                                  break;
-
-                             case (0b00001010):
-                                  Lcd_chr (1,10, 1);
-                                  break;
-
-                             case (0b00001001):
-                                  Lcd_chr (1,9, 1);
-                                  break;
-
-                             case (0b00001000):
-                                  Lcd_chr (1,8, 1);
-                                  break;
-
-                             case (0b00000111):
-                                  Lcd_chr (1,7, 1);
-                                  break;
-
-                             case (0b00000110):
-                                  Lcd_chr (1,6, 1);
-                                  break;
-
-                             case (0b00000101):
-                                  Lcd_chr (1,5, 1);
-                                  break;
-
-                             case (0b00000100):
-                                  Lcd_chr (1,4, 1);
-                                  break;
-
-                             case (0b00000011):
-                                  Lcd_chr (1,3, 1);
-                                  break;
-
-                             case (0b00000010):
-                                  Lcd_chr (1,2, 1);
-                                  break;
-
-                                          }
-                                  }
-
-             else if (armazena_pos_inimigo2 > 0){
-
-                    switch (armazena_pos_inimigo2)  {
-
-                             case (0b00001111):
-                                  Lcd_chr (1,15, 2);
-                                  break;                                      //testa primeiro se a variavel que representa inimigo na primeira
-                                                                              //linha é maior que um, e entra em uma função que chama a mesma
-                             case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
-                                  Lcd_chr (1,14, 2);                          //que escreve o inimigo em linha 1 ou 2
-                                  break;
-
-                             case (0b00001101):
-                                  Lcd_chr (1,13, 2);
-                                  break;
-
-                             case (0b00001100):
-                                  Lcd_chr (1,12, 2);
-                                  break;
-
-                             case (0b00001011):
-                                  Lcd_chr (1,11, 2);
-                                  break;
-
-                             case (0b00001010):
-                                  Lcd_chr (1,10, 2);
-                                  break;
-
-                             case (0b00001001):
-                                  Lcd_chr (1,9, 2);
-                                  break;
-
-                             case (0b00001000):
-                                  Lcd_chr (1,8, 2);
-                                  break;
-
-                             case (0b00000111):
-                                  Lcd_chr (1,7, 2);
-                                  break;
-
-                             case (0b00000110):
-                                  Lcd_chr (1,6, 2);
-                                  break;
-
-                             case (0b00000101):
-                                  Lcd_chr (1,5, 2);
-                                  break;
-
-                             case (0b00000100):
-                                  Lcd_chr (1,4, 2);
-                                  break;
-
-                             case (0b00000011):
-                                  Lcd_chr (1,3, 2);
-                                  break;
-
-                             case (0b00000010):
-                                  Lcd_chr (1,2, 2);
-                                  break;
-
-                                          }
-                                  }
-       }
-       
-  else if (linha2 == 0b00000010){
-  
-            if (armazena_pos_inimigo1 > 0){
-
-                    switch (armazena_pos_inimigo1)  {
-
-                             case (0b00001111):
-                                  Lcd_chr (2,15, 1);
-                                  break;                                      //testa primeiro se a variavel que representa inimigo na primeira
-                                                                              //linha é maior que um, e entra em uma função que chama a mesma
-                             case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
-                                  Lcd_chr (2,14, 1);                          //que escreve o inimigo em linha 1 ou 2
-                                  break;
-
-                             case (0b00001101):
-                                  Lcd_chr (2,13, 1);
-                                  break;
-
-                             case (0b00001100):
-                                  Lcd_chr (2,12, 1);
-                                  break;
-
-                             case (0b00001011):
-                                  Lcd_chr (2,11, 1);
-                                  break;
-
-                             case (0b00001010):
-                                  Lcd_chr (2,10, 1);
-                                  break;
-
-                             case (0b00001001):
-                                  Lcd_chr (2,9, 1);
-                                  break;
-
-                             case (0b00001000):
-                                  Lcd_chr (2,8, 1);
-                                  break;
-
-                             case (0b00000111):
-                                  Lcd_chr (2,7, 1);
-                                  break;
-
-                             case (0b00000110):
-                                  Lcd_chr (2,6, 1);
-                                  break;
-
-                             case (0b00000101):
-                                  Lcd_chr (2,5, 1);
-                                  break;
-
-                             case (0b00000100):
-                                  Lcd_chr (2,4, 1);
-                                  break;
-
-                             case (0b00000011):
-                                  Lcd_chr (2,3, 1);
-                                  break;
-
-                             case (0b00000010):
-                                  Lcd_chr (2,2, 1);
-                                  break;
-
-                                          }
-                                  }
-                                  
-            else if (armazena_pos_inimigo2 > 0){
-
-                    switch (armazena_pos_inimigo2)  {
-
-                             case (0b00001111):
-                                  Lcd_chr (2,15, 2);
-                                  break;                                      //testa primeiro se a variavel que representa inimigo na primeira
-                                                                              //linha é maior que um, e entra em uma função que chama a mesma
-                             case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
-                                  Lcd_chr (2,14, 2);                          //que escreve o inimigo em linha 1 ou 2
-                                  break;
-
-                             case (0b00001101):
-                                  Lcd_chr (2,13, 2);
-                                  break;
-
-                             case (0b00001100):
-                                  Lcd_chr (2,12, 2);
-                                  break;
-
-                             case (0b00001011):
-                                  Lcd_chr (2,11, 2);
-                                  break;
-
-                             case (0b00001010):
-                                  Lcd_chr (2,10, 2);
-                                  break;
-
-                             case (0b00001001):
-                                  Lcd_chr (2,9, 2);
-                                  break;
-
-                             case (0b00001000):
-                                  Lcd_chr (2,8, 2);
-                                  break;
-
-                             case (0b00000111):
-                                  Lcd_chr (2,7, 2);
-                                  break;
-
-                             case (0b00000110):
-                                  Lcd_chr (2,6, 2);
-                                  break;
-
-                             case (0b00000101):
-                                  Lcd_chr (2,5, 2);
-                                  break;
-
-                             case (0b00000100):
-                                  Lcd_chr (2,4, 2);
-                                  break;
-
-                             case (0b00000011):
-                                  Lcd_chr (2,3, 2);
-                                  break;
-
-                             case (0b00000010):
-                                  Lcd_chr (2,2, 2);
-                                  break;
-
-                                          }
-                                  }
-
-          else if (armazena_pos_inimigo3 > 0){
-
-                    switch (armazena_pos_inimigo3)  {
-
-                             case (0b00001111):
-                                  Lcd_chr (2,15, 6);
-                                  break;                                      //testa primeiro se a variavel que representa inimigo na primeira
-                                                                              //linha é maior que um, e entra em uma função que chama a mesma
-                             case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
-                                  Lcd_chr (2,14, 6);                          //que escreve o inimigo em linha 1 ou 2
-                                  break;
-
-                             case (0b00001101):
-                                  Lcd_chr (2,13, 6);
-                                  break;
-
-                             case (0b00001100):
-                                  Lcd_chr (2,12, 6);
-                                  break;
-
-                             case (0b00001011):
-                                  Lcd_chr (2,11, 6);
-                                  break;
-
-                             case (0b00001010):
-                                  Lcd_chr (2,10, 6);
-                                  break;
-
-                             case (0b00001001):
-                                  Lcd_chr (2,9, 6);
-                                  break;
-
-                             case (0b00001000):
-                                  Lcd_chr (2,8, 6);
-                                  break;
-
-                             case (0b00000111):
-                                  Lcd_chr (2,7, 6);
-                                  break;
-
-                             case (0b00000110):
-                                  Lcd_chr (2,6, 6);
-                                  break;
-
-                             case (0b00000101):
-                                  Lcd_chr (2,5, 6);
-                                  break;
-
-                             case (0b00000100):
-                                  Lcd_chr (2,4, 6);
-                                  break;
-
-                             case (0b00000011):
-                                  Lcd_chr (2,3, 6);
-                                  break;
-
-                             case (0b00000010):
-                                  Lcd_chr (2,2, 6);
-                                  break;
-
-                                          }
-                   }
+                case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
+                    Lcd_chr (1,14, 1);                          //que escreve o inimigo em linha 1 ou 2
+                    break;
+
+                case (0b00001101):
+                    Lcd_chr (1,13, 1);
+                    break;
+
+                case (0b00001100):
+                    Lcd_chr (1,12, 1);
+                    break;
+
+                case (0b00001011):
+                    Lcd_chr (1,11, 1);
+                    break;
+
+                case (0b00001010):
+                    Lcd_chr (1,10, 1);
+                    break;
+
+                case (0b00001001):
+                    Lcd_chr (1,9, 1);
+                    break;
+
+                case (0b00001000):
+                    Lcd_chr (1,8, 1);
+                    break;
+
+                case (0b00000111):
+                    Lcd_chr (1,7, 1);
+                    break;
+
+                case (0b00000110):
+                    Lcd_chr (1,6, 1);
+                    break;
+
+                case (0b00000101):
+                    Lcd_chr (1,5, 1);
+                    break;
+
+                case (0b00000100):
+                    Lcd_chr (1,4, 1);
+                    break;
+
+                case (0b00000011):
+                    Lcd_chr (1,3, 1);
+                    break;
+
+                case (0b00000010):
+                    Lcd_chr (1,2, 1);
+                    break;
+            }
+      }
+
+    else if (armazena_pos_inimigo2 > 0){
+        switch (armazena_pos_inimigo2)  {
+            case (0b00001111):
+                Lcd_chr (1,15, 2);
+                break;                                      //testa primeiro se a variavel que representa inimigo na primeira
+                                                            //linha é maior que um, e entra em uma função que chama a mesma
+            case (0b00001110):                              //Senão se, testa se posicao inimigo está na linha 2, de forma
+                Lcd_chr (1,14, 2);                          //que escreve o inimigo em linha 1 ou 2
+                break;
+
+            case (0b00001101):
+                Lcd_chr (1,13, 2);
+                break;
+
+            case (0b00001100):
+                Lcd_chr (1,12, 2);
+                break;
+
+            case (0b00001011):
+                Lcd_chr (1,11, 2);
+                break;
+
+            case (0b00001010):
+                Lcd_chr (1,10, 2);
+                break;
+            case (0b00001001):
+                Lcd_chr (1,9, 2);
+                break;
+
+            case (0b00001000):
+                Lcd_chr (1,8, 2);
+                break;
+
+            case (0b00000111):
+                Lcd_chr (1,7, 2);
+                break;
+
+            case (0b00000110):
+                Lcd_chr (1,6, 2);
+                break;
+
+            case (0b00000101):
+                Lcd_chr (1,5, 2);
+                break;
+
+            case (0b00000100):
+                Lcd_chr (1,4, 2);
+                break;
+
+            case (0b00000011):
+                Lcd_chr (1,3, 2);
+                break;
+
+            case (0b00000010):
+                Lcd_chr (1,2, 2);
+                break;
+            }
         }
- }
+    }
+       
+    else if (linha2 == 0b00000010){
+        if (armazena_pos_inimigo1 > 0){
+            switch (armazena_pos_inimigo1)  {
+                case (0b00001111):
+                    Lcd_chr (2,15, 1);
+                    break;                                      //testa primeiro se a variavel que representa inimigo na primeira
+                                                                //linha é maior que um, e entra em uma função que chama a mesma
+                case (0b00001110):                              //Senão se, testa se posicao inimigo está na linha 2, de forma
+                    Lcd_chr (2,14, 1);                          //que escreve o inimigo em linha 1 ou 2
+                    break;
+                case (0b00001101):
+                    Lcd_chr (2,13, 1);
+                    break;
+
+                case (0b00001100):
+                    Lcd_chr (2,12, 1);
+                    break;
+
+                case (0b00001011):
+                    Lcd_chr (2,11, 1);
+                    break;
+
+                case (0b00001010):
+                    Lcd_chr (2,10, 1);
+                    break;
+
+                case (0b00001001):
+                    Lcd_chr (2,9, 1);
+                    break;
+
+                case (0b00001000):
+                    Lcd_chr (2,8, 1);
+                    break;
+
+                case (0b00000111):
+                    Lcd_chr (2,7, 1);
+                    break;
+
+                case (0b00000110):
+                    Lcd_chr (2,6, 1);
+                    break;
+
+                case (0b00000101):
+                    Lcd_chr (2,5, 1);
+                    break;
+
+                case (0b00000100):
+                    Lcd_chr (2,4, 1);
+                    break;
+
+                case (0b00000011):
+                    Lcd_chr (2,3, 1);
+                    break;
+
+                case (0b00000010):
+                    Lcd_chr (2,2, 1);
+                    break;
+
+            }
+        }
+
+    else if (armazena_pos_inimigo2 > 0){
+        switch (armazena_pos_inimigo2)  {
+            case (0b00001111):
+                Lcd_chr (2,15, 2);
+                break;                                      //testa primeiro se a variavel que representa inimigo na primeira
+                                                            //linha é maior que um, e entra em uma função que chama a mesma
+            case (0b00001110):                              //Senão se, testa se posicao inimigo está na linha 2, de forma
+                Lcd_chr (2,14, 2);                          //que escreve o inimigo em linha 1 ou 2
+                break;
+
+            case (0b00001101):
+                Lcd_chr (2,13, 2);
+                break;
+
+            case (0b00001100):
+                Lcd_chr (2,12, 2);
+                break;
+
+            case (0b00001011):
+                Lcd_chr (2,11, 2);
+                break;
+
+            case (0b00001010):
+                Lcd_chr (2,10, 2);
+                break;
+
+            case (0b00001001):
+                Lcd_chr (2,9, 2);
+                break;
+
+            case (0b00001000):
+                Lcd_chr (2,8, 2);
+                break;
+
+            case (0b00000111):
+                Lcd_chr (2,7, 2);
+                break;
+
+            case (0b00000110):
+                Lcd_chr (2,6, 2);
+                break;
+
+            case (0b00000101):
+                Lcd_chr (2,5, 2);
+                break;
+
+            case (0b00000100):
+                Lcd_chr (2,4, 2);
+                break;
+
+            case (0b00000011):
+                Lcd_chr (2,3, 2);
+                break;
+
+            case (0b00000010):
+                Lcd_chr (2,2, 2);
+                break;
+
+            }
+        }
+
+    else if (armazena_pos_inimigo3 > 0){
+        switch (armazena_pos_inimigo3)  {
+            case (0b00001111):
+                Lcd_chr (2,15, 6);
+                break;                                      //testa primeiro se a variavel que representa inimigo na primeira
+                                                            //linha é maior que um, e entra em uma função que chama a mesma
+            case (0b00001110):                              //Senão se, testa se posicao inimigo está na linha 2, de forma
+                Lcd_chr (2,14, 6);                          //que escreve o inimigo em linha 1 ou 2
+                break;
+
+            case (0b00001101):
+                Lcd_chr (2,13, 6);
+               break;
+
+            case (0b00001100):
+                Lcd_chr (2,12, 6);
+                break;
+
+            case (0b00001011):
+                Lcd_chr (2,11, 6);
+                break;
+
+            case (0b00001010):
+                Lcd_chr (2,10, 6);
+                break;
+
+            case (0b00001001):
+                Lcd_chr (2,9, 6);
+                break;
+
+            case (0b00001000):
+                Lcd_chr (2,8, 6);
+                break;
+
+            case (0b00000111):
+                Lcd_chr (2,7, 6);
+                break;
+
+            case (0b00000110):
+                Lcd_chr (2,6, 6);
+                break;
+
+            case (0b00000101):
+                Lcd_chr (2,5, 6);
+                break;
+
+            case (0b00000100):
+                Lcd_chr (2,4, 6);
+                break;
+
+            case (0b00000011):
+                Lcd_chr (2,3, 6);
+                break;
+
+            case (0b00000010):
+                Lcd_chr (2,2, 6);
+                break;
+      }
+    }
+  }
+}
 // ------------------------------------------------------------- Final Funcao Chama Inimigo --------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -648,34 +618,30 @@ void Chama_Inimigo() {                                                  //Funcao
 
 int Testa_Tiro_Inimigo(){
 
-int testa_explosao;
-
-                                if ((armazena_pos_tiro  == testa_inimigo1) && (linha1 == 0b00000001) && (store_tiro == 0b00000001)){                  //Funcao que tem como objetivo testar se o inimigo possui a mesma posicao da nave principal
-                                             Lcd_Cmd(_LCD_CLEAR);                                                                                     //Para isso sao feitos diversos testes, usando a variavel que armazena a posicao do tiro com
-                                             Chama_Enterprise();                                                                                      //a variavel que testa a posicao do inimigo, de forma que se estiver em linha 1, explode
-                                             lcd_chr (1, testa_inimigo1, 3);                                                                          //a posicao referente ao inimigo na linha 1, se na linha 2, explode na linha 2.
-                                             delay_ms (300);
-                                             Lcd_Cmd(_LCD_CLEAR);
-                                             Chama_Enterprise();
-                                             testa_explosao = 0b00000001;
-                                             pos_inimigo_final = 0b00000000;
-                                             return testa_explosao;
-                                                                                                                                        }
-
-                                else if ((armazena_pos_tiro == testa_inimigo2) && (linha2 == 0b00000010) && (store_tiro == 0b00000010)){
-                                             Lcd_Cmd(_LCD_CLEAR);
-                                             Chama_Enterprise();
-                                             lcd_chr (2, testa_inimigo2, 3);
-                                             delay_ms (300);
-                                             Lcd_Cmd(_LCD_CLEAR);
-                                             Chama_Enterprise();
-                                             testa_explosao = 0b00000001;
-                                             pos_inimigo_final = 0b00000000;
-                                             return testa_explosao;
-                                                                                                                                           }
-
-
-      }
+    int testa_explosao;
+    if ((armazena_pos_tiro  == testa_inimigo1) && (linha1 == 0b00000001) && (store_tiro == 0b00000001)){         //Funcao que tem como objetivo testar se o inimigo possui a mesma posicao da nave principal
+        Lcd_Cmd(_LCD_CLEAR);                                                                                     //Para isso sao feitos diversos testes, usando a variavel que armazena a posicao do tiro com
+        Chama_Enterprise();                                                                                      //a variavel que testa a posicao do inimigo, de forma que se estiver em linha 1, explode
+        lcd_chr (1, testa_inimigo1, 3);                                                                          //a posicao referente ao inimigo na linha 1, se na linha 2, explode na linha 2.
+        delay_ms (300);
+        Lcd_Cmd(_LCD_CLEAR);
+        Chama_Enterprise();
+        testa_explosao = 0b00000001;
+        pos_inimigo_final = 0b00000000;
+        return testa_explosao;
+    }
+    else if ((armazena_pos_tiro == testa_inimigo2) && (linha2 == 0b00000010) && (store_tiro == 0b00000010)){
+        Lcd_Cmd(_LCD_CLEAR);
+        Chama_Enterprise();
+        lcd_chr (2, testa_inimigo2, 3);
+        delay_ms (300);
+        Lcd_Cmd(_LCD_CLEAR);
+        Chama_Enterprise();
+        testa_explosao = 0b00000001;
+        pos_inimigo_final = 0b00000000;
+        return testa_explosao;
+    }
+}
 // --------------------------------------------------------- Final Funcao Testa_Tiro_Inimigo ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -684,49 +650,48 @@ int testa_explosao;
 
 void nave_tiro(){           
 
-int teste = 0;                                                                   //Funcao que chama e testa a posicao do tiro, quando solicitado
-                                                                                 //pelo usuário
-                                 if (store_tiro == 0b00000001){                  //Testa se a variável armazena tiro é 1 ou 2
-                                       Lcd_Cmd(_LCD_CLEAR);                      //e dessa forma, atira em linha 1 ou 2
-                                       Chama_Enterprise();                       //Chama todas as funções de escrita na tela e
-                                       Chama_Inimigo();                          //e testa onde escrever o tiro, após executado
+    int teste = 0;                                //Funcao que chama e testa a posicao do tiro, quando solicitado
+                                                  //pelo usuário
+    if (store_tiro == 0b00000001){                //Testa se a variável armazena tiro é 1 ou 2
+        Lcd_Cmd(_LCD_CLEAR);                      //e dessa forma, atira em linha 1 ou 2
+        Chama_Enterprise();                       //Chama todas as funções de escrita na tela e
+        Chama_Inimigo();                          //e testa onde escrever o tiro, após executado
                                       
-                                       teste = Testa_Tiro_Inimigo();
-                                       if (teste == 0b00000001){
-                                                  testa_primeira_explosao = 0b00000001;
-                                                  linha1 = 0b00000000;
-                                                  Lcd_Cmd(_LCD_CLEAR);
-                                                  Chama_Enterprise();
-                                                  testa_tiro = 0b00000000;
-                                                  armazena_pos_tiro = 0b00000000;
-                                                      }
-                                       else
-                                            lcd_chr (1, tiro, 5);
-                                       tiro++;
-                                       armazena_pos_tiro  = tiro;
-                                                              }
-
-                                 else if (store_tiro == 0b00000010){
-                                       Lcd_Cmd(_LCD_CLEAR);
-                                       Chama_Enterprise();
-                                       Chama_Inimigo();
-                                       teste = Testa_Tiro_Inimigo();
-                                       
-                                       if (teste == 0b00000001){
-                                                  testa_primeira_explosao = 0b00000001;
-                                                  linha2 = 0b00000000;
-                                                  Lcd_Cmd(_LCD_CLEAR);
-                                                  Chama_Enterprise();
-                                                  testa_tiro = 0b00000000;
-                                                  armazena_pos_tiro = 0b00000000;
-                                                      }
-                                       else
-                                           lcd_chr (2, tiro, 5);
-                                       tiro++;
-                                       armazena_pos_tiro  = tiro;
-                                                                       }
-       teste = 0;
-                 }
+        teste = Testa_Tiro_Inimigo();
+        if (teste == 0b00000001){
+            testa_primeira_explosao = 0b00000001;
+            linha1 = 0b00000000;
+            Lcd_Cmd(_LCD_CLEAR);
+            Chama_Enterprise();
+            testa_tiro = 0b00000000;
+            armazena_pos_tiro = 0b00000000;
+        }
+        else
+            lcd_chr (1, tiro, 5);
+        tiro++;
+        armazena_pos_tiro  = tiro;
+    }
+    else if (store_tiro == 0b00000010){
+        Lcd_Cmd(_LCD_CLEAR);
+        Chama_Enterprise();
+        Chama_Inimigo();
+        teste = Testa_Tiro_Inimigo();
+                                      
+        if (teste == 0b00000001){
+            testa_primeira_explosao = 0b00000001;
+            linha2 = 0b00000000;
+            Lcd_Cmd(_LCD_CLEAR);
+            Chama_Enterprise();
+            testa_tiro = 0b00000000;
+            armazena_pos_tiro = 0b00000000;
+        }
+        else
+            lcd_chr (2, tiro, 5);
+        tiro++;
+        armazena_pos_tiro  = tiro;
+    }
+    teste = 0;
+}
 // ------------------------------------------------------------- Final Funcao Nave_Tiro ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -735,28 +700,27 @@ int teste = 0;                                                                  
 
 int special(){                                                                //Funcao Especial
                                                                               //De forma que testa se usuario pressionou botao do Ataque Especial
-if ((((button(&PORTD, 3, 200, 1))) && (especial == 1))){                      //Se sim, explode a nave, e obriga funcao a sair do for da nave inimiga
-          Lcd_Cmd(_LCD_CLEAR);
-          Chama_Enterprise();
+    if ((((button(&PORTD, 3, 200, 1))) && (especial == 1))){                  //Se sim, explode a nave, e obriga funcao a sair do for da nave inimiga
+        Lcd_Cmd(_LCD_CLEAR);
+        Chama_Enterprise();
           
-          if (linha1 == 0b00000001){
-          lcd_chr (1, testa_inimigo1, 3);
-          delay_ms (250);
-          especial = 0b00000000;
-          return 1;
-                         }
+        if (linha1 == 0b00000001){
+            lcd_chr (1, testa_inimigo1, 3);
+            delay_ms (250);
+            especial = 0b00000000;
+            return 1;
+        }
                          
-          else if (linha2 == 0b00000010){
-          lcd_chr (2, testa_inimigo2, 3);
-          delay_ms (250); 
-          especial = 0b00000000;
-          return 1;
-                                }
+        else if (linha2 == 0b00000010){
+            lcd_chr (2, testa_inimigo2, 3);
+            delay_ms (250); 
+            especial = 0b00000000;
+            return 1;
+        }
 
-                                                      }
- else
-     return 0;
-
+    }
+    else
+        return 0;
 }
 
 // ------------------------------------------------------------- Final Funcao Special----------------------------------------------------------------------
@@ -767,49 +731,45 @@ if ((((button(&PORTD, 3, 200, 1))) && (especial == 1))){                      //
 
 void ataque_1 (){
 
-int i = 0b00000000;                                         //contador posicao nave_inimigo
-int testa = 0b00000000;
-short explode_nave = 0b00000000;
-short tiro_especial;
+    int i = 0b00000000;                                         //contador posicao nave_inimigo
+    int testa = 0b00000000;
+    short explode_nave = 0b00000000;
+    short tiro_especial;
 
-
-while (i<16)     {                                                            //execução rotina principal - andar naves
-
-       linha1 = 0b00000001;
-       Lcd_Cmd(_LCD_CLEAR);                                                  //onde será escrito o caracter de explosão de nave
-       Chama_Enterprise();                                                   //Chama nave_principal
-
+    while (i<16)     {                                                        //execução rotina principal - andar naves
+        linha1 = 0b00000001;
+        Lcd_Cmd(_LCD_CLEAR);                                                  //onde será escrito o caracter de explosão de nave
+        Chama_Enterprise();                                                   //Chama nave_principal
+        
         switch (i) {
+            case 1:
+                Lcd_chr (1,16, 1);                                    //Nave Inimiga I
+                armazena_pos_inimigo1 = 0b00001111;                   //Armazena posicao do inimigo para teste posterior
+                testa_inimigo1 = 0b00010000;                          //Atribui valor 16 para a variável
+                Chama_Enterprise();                                   //Chama ultima posicao de nave principal na tela
 
-                    case 1:
-                              Lcd_chr (1,16, 1);                                    //Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001111;                   //Armazena posicao do inimigo para teste posterior
-                              testa_inimigo1 = 0b00010000;                          //Atribui valor 16 para a variável
-                              Chama_Enterprise();                                   //Chama ultima posicao de nave principal na tela
-
-                              if ((button(&PORTD, 2, 200, 1))){                     //Se o bit 2 do portd estiver pressionado
-                                               store_tiro = posicao_nave;           //armazena na variavel a posicao da nave
-                                               nave_tiro();                         //testa se usuario pediu para ser lançado um tiro
-                                               testa_tiro = 0b00000001;             //atribui 1 a testa_tiro
-                                                              }
+                if ((button(&PORTD, 2, 200, 1))){                     //Se o bit 2 do portd estiver pressionado
+                    store_tiro = posicao_nave;           //armazena na variavel a posicao da nave
+                    nave_tiro();                         //testa se usuario pediu para ser lançado um tiro
+                    testa_tiro = 0b00000001;             //atribui 1 a testa_tiro
+                }
                                                               
-                              testa = Testa_Tiro_Inimigo();                                         //chama a funcao testa_tiro, de modo que se coincidir, explode a nave
+                testa = Testa_Tiro_Inimigo();                                         //chama a funcao testa_tiro, de modo que se coincidir, explode a nave
 
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }            */
+                /*tiro_especial = special();
+                if (tiro_especial == 1){
+                    i = 15;                          //linha1 = 0 (reseta variável)
+                    linha1 = 0b00000000;             //explode_nave = 1 e sai do for
+                    explode_nave = 0b00000001;
+                }*/
 
-                              if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)  {   // e atribui valor 1 a testa
-                                             i = 15;                                                 //se a variável testa for = 1 e testa_primeira_explosao = 1
-                                                                                                  }  //i = 15, de modo que saia do for
+                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)       // e atribui valor 1 a testa
+                    i = 15;                                                             //se a variável testa for = 1 e testa_primeira_explosao = 1
+                                                                                        //i = 15, de modo que saia do for
+                delay_ms (300);
+                break;
 
-                              delay_ms (300);
-                              break;
-
-                     case 2:
+            case 2:
                               Lcd_chr (1,15, 1);                              // Nave Inimiga I
                               armazena_pos_inimigo1 = 0b00001110;             //armazena posicao do inimigo para atualizar a tela
                               testa_inimigo1 = 0b0001111;                     //armazena posicao inimigo para teste em colisao com tiro
@@ -853,7 +813,7 @@ while (i<16)     {                                                            //
                               delay_ms (300);
                               break;
 
-                     case 3:
+            case 3:
                               Lcd_chr (1,14, 1);                               // Nave Inimiga I
                               armazena_pos_inimigo1 = 0b00001101;
                               testa_inimigo1 = 0b00001110;
