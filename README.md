@@ -24,11 +24,19 @@ O projeto foi todo **desenvolvido em C**. </br>
 O jogo é composto de uma _IHM_ e alguns botões que permitem ao usuário controlar sua nave.
 
 *- Os arquivos .c contém o código desenvolvido utilizando C.* </br>
+*- Os arquivos .h são os cabeçalhos dos arquivos .c* </br>
 *- O arquivo .asm contém o código traduzido para linaguagem de montagem. (assembly)* </br>
 *- O arquivo .hex é o arquivo com formato para ser gravado no microcontrolador, que é traduzido para linguagem de máquina e interpretado.* </br>
 *- O arquivo .mccpi é o arquivo que linka todos os arquivos de projeto, criado pelo compilador MikroC, utilizado para desenvolvimento.* </br>
 *- Os demais arquivos, são arquivos de configuração criados pelo compilador.* </br>
-*- Dentro da pasta /Proteus está o esquemático com o hardware do circuito.*
+
+Os arquivos .c e .h:
+
+*- menu.c e menu.h --> Arquivos responsáveis pela função de criação do menu do game.* </br>
+*- naveAtaques.c e naveAtaques.h --> Funções responsáveis pela criação dos inimigos.* </br>
+*- gameControle.c e gameControle.h --> Funções de controle do jogo, como Win, GameOver, etc..* </br>
+*- funcoesAdicionais. e funcoesAdicionais.h --> Funcoes extras, como CustomChar() e Random()* </br>
+*- O arquivo Projeto 032 - Space Invaders v.7.c é equivalente ao main.c e seu cabeçalho é main.h* </br>
 
 ## O que foi utilizado no projeto?
 
@@ -43,7 +51,6 @@ O jogo é composto de uma _IHM_ e alguns botões que permitem ao usuário contro
 7. 2 x Capacitores de 22pF </br>
 8. 1 x Capacitor de 100nF </br>
 10. 1 x Conector com fios para baterias de 9V
-11. 1 x placa universal
 
 em desenvolvimento....
 
