@@ -4,20 +4,20 @@
 
 Projeto de um jogo estilo Space Invaders para plataforma PIC. </br>
 O projeto contempla descrições de **hardware e software**, utilizando um microcontrolador PIC18F45K22, da Microchip. </br>
-O projeto foi desenvolvido como projeto pessoal, quando estava em meu 3º semestre do curso de Engenharia Elétrica na UFSM. </br>
-Portanto, deixo claro que se fizesse o mesmo código hoje em dia, com certeza muita coisa seria melhorada, otimizada, e o código seria extremamente reduzido. </br>
-O projeto foi desenvolvido utilizando a plataforma CUSCO-PIC, desenvolvida em Caxias do Sul, entretanto, mostro um passo a passo de como montar sseu próprio hardware para rodar o game. :)
+PIC INVADERS foi desenvolvido **como projeto pessoal, quando estava entre meu 3º e 4º semestre do curso de Engenharia Elétrica na UFSM.** </br>
+Portanto, deixo claro que se fizesse o mesmo código **hoje** em dia, **com certeza muita coisa seria melhorada e otimizada.** </br>
+O projeto foi desenvolvido utilizando a plataforma CUSCO-PIC, desenvolvida em **Caxias do Sul**. Entretanto, mostro um passo a passo de como montar seu próprio hardware para rodar o game. :)
 
 ## Utilidade
 
-O código foi desenvolvido especificamente para microcontroladores da Microchip. </br>
-Entretanto, sendo feitas modificações de inicalização, e configuração de alguns registradores, principalmente de entrada e saída, e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outras fabricantes. </br>
-Sobretudo, foi desenvolvido com foco nas plataformas PIC. </br>
-O projeto foi todo desenvolvido em C. </br>
+O código foi desenvolvido especificamente para microcontroladores da **Microchip**. </br>
+Entretanto, sendo feitas algumas modificações de inicalização e configuração de alguns registradores (principalmente de entrada e saída), e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outros fabricantes. </br>
+Sobretudo, foi desenvolvido com foco nas **plataformas PIC**. </br>
+O projeto foi todo **desenvolvido em C**. </br>
 
 ## Como funciona?
 
-O jogo é composto de uma IHM e alguns botões que permitem ao usuário controlar sua nave.
+O jogo é composto de uma _IHM_ e alguns botões que permitem ao usuário controlar sua nave.
 
 *- Os arquivos .c contém o código desenvolvido utilizando C.* </br>
 *- O arquivo .asm contém o código traduzido para linaguagem de montagem. (assembly)* </br>
@@ -41,9 +41,7 @@ O jogo é composto de uma IHM e alguns botões que permitem ao usuário controla
 10. 1 x Conector com fios para baterias de 9V
 11. 1 x placa universal
 
-Abaixo, tem-se uma imagem do circuito montado.
-
-
+em desenvolvimento....
 
 ## Direitos
 
