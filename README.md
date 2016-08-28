@@ -3,15 +3,18 @@
 ## A proposta
 
 Projeto de um jogo estilo Space Invaders para plataforma PIC. </br>
-O projeto contempla descrições de **hardware e software**, utilizando um microcontrolador PIC18F45K22, da Microchip. </br>
+O projeto contempla descrições de **hardware e software**, utilizando um microcontrolador PIC18F45K22, da Microchip. 
+
 PIC INVADERS foi desenvolvido **como projeto pessoal, quando estava entre meu 3º e 4º semestre do curso de Engenharia Elétrica na UFSM.** </br>
-Portanto, deixo claro que se fizesse o mesmo código **hoje** em dia, **com certeza muita coisa seria melhorada e otimizada.** </br>
+Portanto, deixo claro que se fizesse o mesmo código **hoje** em dia, **com certeza muita coisa seria melhorada e otimizada.** 
+
 O projeto foi desenvolvido utilizando a plataforma CUSCO-PIC, desenvolvida em **Caxias do Sul**. Entretanto, mostro um passo a passo de como montar seu próprio hardware para rodar o game. :)
 
 ## Utilidade
 
 O código foi desenvolvido especificamente para microcontroladores da **Microchip**. </br>
-Entretanto, sendo feitas algumas modificações de inicalização e configuração de alguns registradores (principalmente de entrada e saída), e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outros fabricantes. </br>
+Entretanto, sendo feitas algumas modificações de inicalização e configuração de alguns registradores (principalmente de entrada e saída), e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outros fabricantes. 
+
 Sobretudo, foi desenvolvido com foco nas **plataformas PIC**. </br>
 O projeto foi todo **desenvolvido em C**. </br>
 
