@@ -32,8 +32,8 @@ short armazena_pos_inimigo3 = 0b00000000;                   // armazena posicao 
 short testa_inimigo1;                                       // armazena posicao inimigo 1 para teste com armazena_pos_tiro para explodir nave inimiga
 short testa_inimigo2;                                       // armazena posicao inimigo 2 para teste com armazena_pos_tiro para explodir nave inimiga
 short testa_explosao;                                       // Ainda nao usada
-short linha1 = 0b00000000;                                  // Variavel usada para força explosao na linha certa - Testada em Teste_Nave_Tiro
-short linha2 = 0b00000000;                                  // Variavel usada para força explosao na linha certa - Testada em Teste_Nave_Tiro
+short linha1 = 0b00000000;                                  // Variavel usada para força explosao na linha certa - Testada em Teste_NaveTiro
+short linha2 = 0b00000000;                                  // Variavel usada para força explosao na linha certa - Testada em Teste_NaveTiro
 short testa_primeira_explosao = 0b00000000;                 // Variavel que testa a explosao antes da chamada de funçao e avanço do tiro
 short game_over = 0b00000000;                               // variavel que testa final de jogo
 short especial = 0b00000000;                                // variavel que armazena especial
@@ -76,10 +76,10 @@ void CustomChar(){
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------- Inicio Funcao Apaga_RAM ---------------------------------------------------------------------
+// -------------------------------------------------------------- Inicio Funcao ApagaRam ---------------------------------------------------------------------
 
 
-void apaga_ram(){
+void ApagaRam(){
                                                              //Funcao Responsavel por limpar os valores do bank 1 e 2 da memória do PIC
     char *ponteiro_apaga, contador;                          //De forma a resetar o microcontrolador, a fim de ser um reset por software
     ponteiro_apaga = (char) 0x00;                            //Bank 1 - Valor Inicial
@@ -95,13 +95,13 @@ void apaga_ram(){
 
 }
 
-// ---------------------------------------------------------------- Final Funcao Apaga_RAM ---------------------------------------------------------------------
+// ---------------------------------------------------------------- Final Funcao ApagaRam ---------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------- Inicio Funcao Gera Random. ----------------------------------------------------------------
 
-int random(){
+int Random(){
 
     int alea, random;
     char randomico;
@@ -172,7 +172,7 @@ int GameOver() {
     }
 
     else {
-        apaga_ram();
+        ApagaRam();
         return 0;
     }
 }
@@ -181,9 +181,9 @@ int GameOver() {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------- Inicio Funcao Win_Game ------------------------------------------------------------------
+// --------------------------------------------------------- Inicio Funcao WinGame ------------------------------------------------------------------
 
-void Win_Game(){
+void WinGame(){
 
     Lcd_Cmd(_LCD_CLEAR);
     lcd_chr (1, 16, 3);
@@ -252,13 +252,13 @@ void Win_Game(){
   
 }
 
-// ---------------------------------------------------------- Final Funcao Win_Game  ------------------------------------------------------------------
+// ---------------------------------------------------------- Final Funcao WinGame  ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------- Inicio Funcao Escreve_Nave Principal ----------------------------------------------------------------------
 
-void escreve_enterprise(){                                         // Testa se a nave principal foi mudada de lugar
+void EscreveEnterprise(){                                         // Testa se a nave principal foi mudada de lugar
 
     if (button(&PORTD, 0, 50, 1)){                                 //Se pressionado bit 0 de PORTD
         posicao_nave = 0b00000001;                                 //Nave é escrita e é armazenado valor 1 para comparação posterior
@@ -281,7 +281,7 @@ void escreve_enterprise(){                                         // Testa se a
 // -------------------------------------------------------------------- Chama Enterprise ------------------------------------------------------------------
 
 
-void Chama_Enterprise() {                                                 //Funcao super simples
+void ChamaEnterprise() {                                                 //Funcao super simples
                                                                           //Apenas chama a nave principal na tela
     switch (posicao_nave){                                                //de acordo com a ultima posicao de memoria switch entre posicao 0 e 1
         case (0b00000001):                                                //reescreve na tela de acordo com ultimo endereçamento
@@ -301,7 +301,7 @@ void Chama_Enterprise() {                                                 //Func
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------- Chama Inimigo ------------------------------------------------------------------
 
-void Chama_Inimigo() {                                                  //Funcao Chama_Inimigo
+void ChamaInimigo() {                                                  //Funcao ChamaInimigo
                                                                         //Testa em qual posicao foi armazenado o inimigo, e toda
                                                                         //vez que for solicitada, retorna o valor armazenado - 1
                                                                         //de forma a atualizar a tela, de acordo com o necessitado
@@ -312,8 +312,8 @@ void Chama_Inimigo() {                                                  //Funcao
                 case (0b00001111):
                     Lcd_chr (1,15, 1);
                     break;                                      //testa primeiro se a variavel que representa inimigo na primeira
-                                                                              //linha é maior que um, e entra em uma função que chama a mesma
-                case (0b00001110):                               //Senão se, testa se posicao inimigo está na linha 2, de forma
+                                                                //linha é maior que um, e entra em uma função que chama a mesma
+                case (0b00001110):                              //Senão se, testa se posicao inimigo está na linha 2, de forma
                     Lcd_chr (1,14, 1);                          //que escreve o inimigo em linha 1 ou 2
                     break;
 
@@ -614,55 +614,55 @@ void Chama_Inimigo() {                                                  //Funcao
 // ----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------- Inicio Funcao Testa_Tiro_Inimigo ------------------------------------------------------------------
+// ---------------------------------------------------------- Inicio Funcao TestaTiroInimigo ------------------------------------------------------------------
 
-int Testa_Tiro_Inimigo(){
+int TestaTiroInimigo(){
 
     int testa_explosao;
     if ((armazena_pos_tiro  == testa_inimigo1) && (linha1 == 0b00000001) && (store_tiro == 0b00000001)){         //Funcao que tem como objetivo testar se o inimigo possui a mesma posicao da nave principal
         Lcd_Cmd(_LCD_CLEAR);                                                                                     //Para isso sao feitos diversos testes, usando a variavel que armazena a posicao do tiro com
-        Chama_Enterprise();                                                                                      //a variavel que testa a posicao do inimigo, de forma que se estiver em linha 1, explode
+        ChamaEnterprise();                                                                                      //a variavel que testa a posicao do inimigo, de forma que se estiver em linha 1, explode
         lcd_chr (1, testa_inimigo1, 3);                                                                          //a posicao referente ao inimigo na linha 1, se na linha 2, explode na linha 2.
         delay_ms (300);
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
         testa_explosao = 0b00000001;
         pos_inimigo_final = 0b00000000;
         return testa_explosao;
     }
     else if ((armazena_pos_tiro == testa_inimigo2) && (linha2 == 0b00000010) && (store_tiro == 0b00000010)){
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
         lcd_chr (2, testa_inimigo2, 3);
         delay_ms (300);
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
         testa_explosao = 0b00000001;
         pos_inimigo_final = 0b00000000;
         return testa_explosao;
     }
 }
-// --------------------------------------------------------- Final Funcao Testa_Tiro_Inimigo ------------------------------------------------------------------
+// --------------------------------------------------------- Final Funcao TestaTiroInimigo ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------- Inicio Funcao Nave_tiro ------------------------------------------------------------------
+// --------------------------------------------------------------- Inicio Funcao NaveTiro ------------------------------------------------------------------
 
-void nave_tiro(){           
+void NaveTiro(){           
 
     int teste = 0;                                //Funcao que chama e testa a posicao do tiro, quando solicitado
                                                   //pelo usuário
     if (store_tiro == 0b00000001){                //Testa se a variável armazena tiro é 1 ou 2
         Lcd_Cmd(_LCD_CLEAR);                      //e dessa forma, atira em linha 1 ou 2
-        Chama_Enterprise();                       //Chama todas as funções de escrita na tela e
-        Chama_Inimigo();                          //e testa onde escrever o tiro, após executado
+        ChamaEnterprise();                       //Chama todas as funções de escrita na tela e
+        ChamaInimigo();                          //e testa onde escrever o tiro, após executado
                                       
-        teste = Testa_Tiro_Inimigo();
+        teste = TestaTiroInimigo();
         if (teste == 0b00000001){
             testa_primeira_explosao = 0b00000001;
             linha1 = 0b00000000;
             Lcd_Cmd(_LCD_CLEAR);
-            Chama_Enterprise();
+            ChamaEnterprise();
             testa_tiro = 0b00000000;
             armazena_pos_tiro = 0b00000000;
         }
@@ -673,15 +673,15 @@ void nave_tiro(){
     }
     else if (store_tiro == 0b00000010){
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
-        Chama_Inimigo();
-        teste = Testa_Tiro_Inimigo();
+        ChamaEnterprise();
+        ChamaInimigo();
+        teste = TestaTiroInimigo();
                                       
         if (teste == 0b00000001){
             testa_primeira_explosao = 0b00000001;
             linha2 = 0b00000000;
             Lcd_Cmd(_LCD_CLEAR);
-            Chama_Enterprise();
+            ChamaEnterprise();
             testa_tiro = 0b00000000;
             armazena_pos_tiro = 0b00000000;
         }
@@ -692,7 +692,7 @@ void nave_tiro(){
     }
     teste = 0;
 }
-// ------------------------------------------------------------- Final Funcao Nave_Tiro ------------------------------------------------------------------
+// ------------------------------------------------------------- Final Funcao NaveTiro ------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -702,7 +702,7 @@ int special(){                                                                //
                                                                               //De forma que testa se usuario pressionou botao do Ataque Especial
     if ((((button(&PORTD, 3, 200, 1))) && (especial == 1))){                  //Se sim, explode a nave, e obriga funcao a sair do for da nave inimiga
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
           
         if (linha1 == 0b00000001){
             lcd_chr (1, testa_inimigo1, 3);
@@ -727,9 +727,9 @@ int special(){                                                                //
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------- Inicio Funcao Ataque_1 ----------------------------------------------------------------------
+// ------------------------------------------------------------- Inicio Funcao Ataque1 ----------------------------------------------------------------------
 
-void ataque_1 (){
+void Ataque1 (){
 
     int i = 0b00000000;                                         //contador posicao nave_inimigo
     int testa = 0b00000000;
@@ -739,22 +739,22 @@ void ataque_1 (){
     while (i<16)     {                                                        //execução rotina principal - andar naves
         linha1 = 0b00000001;
         Lcd_Cmd(_LCD_CLEAR);                                                  //onde será escrito o caracter de explosão de nave
-        Chama_Enterprise();                                                   //Chama nave_principal
+        ChamaEnterprise();                                                   //Chama nave_principal
         
         switch (i){
             case 1:
                 Lcd_chr (1,16, 1);                                    //Nave Inimiga I
                 armazena_pos_inimigo1 = 0b00001111;                   //Armazena posicao do inimigo para teste posterior
                 testa_inimigo1 = 0b00010000;                          //Atribui valor 16 para a variável
-                Chama_Enterprise();                                   //Chama ultima posicao de nave principal na tela
+                ChamaEnterprise();                                   //Chama ultima posicao de nave principal na tela
 
                 if ((button(&PORTD, 2, 200, 1))){                     //Se o bit 2 do portd estiver pressionado
                     store_tiro = posicao_nave;                        //armazena na variavel a posicao da nave
-                    nave_tiro();                                      //testa se usuario pediu para ser lançado um tiro
+                    NaveTiro();                                      //testa se usuario pediu para ser lançado um tiro
                     testa_tiro = 0b00000001;                          //atribui 1 a testa_tiro
                 }
                                                               
-                testa = Testa_Tiro_Inimigo();                                           //chama a funcao testa_tiro, de modo que se coincidir, explode a nave
+                testa = TestaTiroInimigo();                                           //chama a funcao testa_tiro, de modo que se coincidir, explode a nave
 
                 if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)       // e atribui valor 1 a testa
                     i = 15;                                                             //se a variável testa for = 1 e testa_primeira_explosao = 1
@@ -767,10 +767,10 @@ void ataque_1 (){
                 armazena_pos_inimigo1 = 0b00001110;            //armazena posicao do inimigo para atualizar a tela
                 testa_inimigo1 = 0b0001111;                    //armazena posicao inimigo para teste em colisao com tiro
 
-                Chama_Enterprise();                            //Chama ultima posicao de nave principal na tela
-                escreve_enterprise();                          //Testa se usuario quer mudar nave principal
+                ChamaEnterprise();                            //Chama ultima posicao de nave principal na tela
+                EscreveEnterprise();                          //Testa se usuario quer mudar nave principal
                               
-                testa = Testa_Tiro_Inimigo();                  //recebe valor da funcao de teste tiro
+                testa = TestaTiroInimigo();                  //recebe valor da funcao de teste tiro
                 if (testa == 0b00000001){                      //se a função for = 1, armazena 15 no i
                     i = 15;                                    //linha1 = 0 (reseta variável)
                     linha1 = 0b00000000;                       //explode_nave = 1 e sai do for
@@ -778,19 +778,19 @@ void ataque_1 (){
                 }
                                                                                   
                 if (explode_nave == 0b00000000){                    //se variavel for = 0 (testada anteriormente)
-                    testa = Testa_Tiro_Inimigo();                   //recebe posicao da funcao
+                    testa = TestaTiroInimigo();                   //recebe posicao da funcao
                                                                     //de lugar - linha 1 ou 2
                                         
                     if (testa_tiro == 0b00000001)                   //Testa se tiro = 1, e dessa forma executa a função tiro sem
-                        nave_tiro();                                //que o usuario pressione o botao
+                        NaveTiro();                                //que o usuario pressione o botao
                                                                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){          //se pressinado
                         store_tiro = posicao_nave;                                                //store_posicao recebe posicao da nave
-                        nave_tiro();                                                              //chama funcao do tiro
+                        NaveTiro();                                                              //chama funcao do tiro
                         testa_tiro = 0b00000001;                                                  //atribiui 1 a variável testa_tiro na função de chamar tiro
                     }                                                                             //testa se usuario pediu para ser lançado um tiro
  
-                    testa = Testa_Tiro_Inimigo();                                        //recebe o valor da variavel Testa_Tiro_Inimigo à variavel testa
+                    testa = TestaTiroInimigo();                                        //recebe o valor da variavel TestaTiroInimigo à variavel testa
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)    //se testa for 1 OU testa_primeira_explosao for 1, atribui 15 ao i e sai do for
                     i = 15;                                                              //Segue mesma linha de raciocínio nos casos seguintes
                                                                                                            
@@ -799,14 +799,14 @@ void ataque_1 (){
                 break;
 
             case 3:
-                Lcd_chr (1,14, 1);                                                        // Nave Inimiga I
+                Lcd_chr (1,14, 1);                                                   
                 armazena_pos_inimigo1 = 0b00001101;
                 testa_inimigo1 = 0b00001110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -815,29 +815,29 @@ void ataque_1 (){
                                                           
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                            
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                         //testa se usuario pediu para ser lançado um tiro
+                    }                                                    
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                                        
                     delay_ms (300);
                     break;
 
             case 4:
-                Lcd_chr (1,13, 1);                                            // Nave Inimiga I
+                Lcd_chr (1,13, 1);                                            
                 armazena_pos_inimigo1 = 0b00001100;
                 testa_inimigo1 = 0b00001101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                   linha1 = 0b00000000;
@@ -846,15 +846,15 @@ void ataque_1 (){
  
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                         //testa se usuario pediu para ser lançado um tiro
+                    }                                                      
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                                                           i = 15;         
                 }
@@ -862,14 +862,14 @@ void ataque_1 (){
                 break;
 
             case 5:
-                Lcd_chr (1,12, 1);                                              // Nave Inimiga I
+                Lcd_chr (1,12, 1);                                          
                 armazena_pos_inimigo1 = 0b00001011;
                 testa_inimigo1 = 0b00001100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -878,14 +878,14 @@ void ataque_1 (){
                                           
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
-                    testa = Testa_Tiro_Inimigo();
+                    }                           
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -893,14 +893,14 @@ void ataque_1 (){
                 break;
 
             case 6:
-                Lcd_chr (1,11, 1);                                                  // Nave Inimiga I
+                Lcd_chr (1,11, 1);                                         
                 armazena_pos_inimigo1 = 0b00001010;
                 testa_inimigo1 =  0b00001011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -909,14 +909,14 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000))
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                                                                                     //testa se usuario pediu para ser lançado um tiro
-                        testa = Testa_Tiro_Inimigo();
+                                                                                 
+                        testa = TestaTiroInimigo();
                         if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                             i = 15;         
                 }
@@ -924,14 +924,14 @@ void ataque_1 (){
                 break;
 
             case 7:
-                Lcd_chr (1,10, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,10, 1);                                               
                 armazena_pos_inimigo1 = 0b00001001;
                 testa_inimigo1 =  0b00001010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -940,15 +940,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0){
                     if (testa_tiro == 1)
-                        nave_tiro();
+                        NaveTiro();
                 
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                              
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
 
@@ -957,14 +957,14 @@ void ataque_1 (){
                 break;
 
             case 8:
-                Lcd_chr (1,9, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,9, 1);                                                 
                 armazena_pos_inimigo1 = 0b00001000;
                 testa_inimigo1 =  0b00001001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -973,15 +973,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                    
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                               
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -989,14 +989,14 @@ void ataque_1 (){
                 break;
 
             case 9:
-                Lcd_chr (1,8, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,8, 1);                                                  
                 armazena_pos_inimigo1 = 0b00000111;
                 testa_inimigo1 =  0b00001000;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1005,15 +1005,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                            
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;        
                     }
@@ -1021,14 +1021,14 @@ void ataque_1 (){
                 break;
 
             case 10:
-                Lcd_chr (1,7, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,7, 1);                                            
                 armazena_pos_inimigo1 = 0b00000110;
                 testa_inimigo1 =  0b00000111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                               
                 if (testa == 0b00000001){
                     i = 15;
@@ -1038,15 +1038,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1054,14 +1054,14 @@ void ataque_1 (){
                 break;
 
             case 11:
-                Lcd_chr (1,6, 1);                                                   // Nave Inimiga
+                Lcd_chr (1,6, 1);                                                  
                 armazena_pos_inimigo1 = 0b00000101;
                 testa_inimigo1 =  0b00000110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                             
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1070,15 +1070,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1086,14 +1086,14 @@ void ataque_1 (){
                 break;
 
             case 12:
-                Lcd_chr (1,5, 1);                                                    // Nave Inimiga
+                Lcd_chr (1,5, 1);                                               
                 armazena_pos_inimigo1 = 0b00000100;
                 testa_inimigo1 =  0b00000101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1102,15 +1102,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
   
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                               
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1118,14 +1118,14 @@ void ataque_1 (){
                 break;
 
             case 13:
-                Lcd_chr (1,4, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,4, 1);                                                
                 armazena_pos_inimigo1 = 0b00000011;
                 testa_inimigo1 =  0b00000100;
                                
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1134,15 +1134,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
             
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                                 //testa se usuario pediu para ser lançado um tiro
+                    }                                                        
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
                 }
@@ -1150,14 +1150,14 @@ void ataque_1 (){
                 break;
 
             case 14:
-                Lcd_chr (1,3, 1);                                                     // Nave Inimiga I
+                Lcd_chr (1,3, 1);                                                  
                 armazena_pos_inimigo1 = 0b00000010;
                 testa_inimigo1 =  0b00000011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1166,15 +1166,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                   
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                               
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1183,15 +1183,15 @@ void ataque_1 (){
                 break;
 
             case 15:
-                Lcd_chr (1,2, 1);                                                   // Nave Inimiga I
+                Lcd_chr (1,2, 1);                                             
                 armazena_pos_inimigo1 = 0b00000001;
                 testa_inimigo1 =  0b00000010;
                 pos_inimigo_final = 0b00000001;
                                
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -1200,15 +1200,15 @@ void ataque_1 (){
 
                 if (explode_nave == 0){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
 
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
-                    }                                                               //testa se usuario pediu para ser lançado um tiro
+                    }                                                               
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
 
@@ -1235,13 +1235,13 @@ void ataque_1 (){
     linha1 = 0b00000000;
     especial = 0b00000000;
 }
-// ------------------------------------------------------------------ Final Funcao Ataque_1 -------------------------------------------------------------------
+// ------------------------------------------------------------------ Final Funcao Ataque1 -------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------  Inicio Funcao Ataque_2 ----------------------------------------------------------------------
+// ---------------------------------------------------------------  Inicio Funcao Ataque2 ----------------------------------------------------------------------
 
-void ataque_2 (){
+void Ataque2 (){
 
     int i  = 0b00000000;                           
     int testa = 0b00000000;
@@ -1251,7 +1251,7 @@ void ataque_2 (){
     while (i<16){                                  
         linha2 = 0b00000010;
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
         switch (i){
             case 1:
                 Lcd_chr (2,16, 2);                 
@@ -1260,11 +1260,11 @@ void ataque_2 (){
                               
                 if ((button(&PORTD, 2, 200, 1))){
                     store_tiro = posicao_nave;
-                    nave_tiro();                   
+                    NaveTiro();                   
                     testa_tiro = 0b00000001;
                 }
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                     i = 15;         
                                             
@@ -1276,10 +1276,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001110;
                 testa_inimigo2 =  0b00001111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1288,15 +1288,15 @@ void ataque_2 (){
            
                 if (explode_nave == 0){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                             
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     } 
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1308,10 +1308,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001101;
                 testa_inimigo2 =  0b00001110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1320,15 +1320,15 @@ void ataque_2 (){
      
                 if (explode_nave == 0){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1340,10 +1340,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001100;
                 testa_inimigo2 =  0b00001101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1352,15 +1352,15 @@ void ataque_2 (){
            
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     } 
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1372,10 +1372,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001011;
                 testa_inimigo2 =  0b00001100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1384,15 +1384,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                             
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }            
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1404,10 +1404,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001010;
                 testa_inimigo2 =  0b00001011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1416,15 +1416,15 @@ void ataque_2 (){
                                           
                 if (explode_nave == 0b0000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1436,10 +1436,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001001;
                 testa_inimigo2 =  0b00001010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1448,15 +1448,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                              
                 }
@@ -1468,10 +1468,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00001000;
                 testa_inimigo2 =  0b00001001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1480,15 +1480,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                           i = 15;         
                 }
@@ -1500,10 +1500,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00000111;
                 testa_inimigo2 =  0b00001000;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1512,15 +1512,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
                 }
@@ -1532,10 +1532,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00000110;
                 testa_inimigo2 =  0b00000111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1544,15 +1544,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                           
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }          
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1564,10 +1564,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00000101;
                 testa_inimigo2 =  0b00000110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1576,15 +1576,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                             
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 1)
                         i = 15;                                  
                 }
@@ -1596,10 +1596,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00000100;
                 testa_inimigo2 =  0b00000101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                               
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1608,15 +1608,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                       
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
                 }
@@ -1628,10 +1628,10 @@ void ataque_2 (){
                 armazena_pos_inimigo2 = 0b00000011;
                 testa_inimigo2 =  0b00000100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1640,15 +1640,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                       
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                        
                 }
@@ -1661,10 +1661,10 @@ void ataque_2 (){
                 testa_inimigo2 =  0b00000011;
                 pos_inimigo_final = 0b000000010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1673,15 +1673,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }         
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -1694,10 +1694,10 @@ void ataque_2 (){
                 testa_inimigo2 =  0b00000010;
                 pos_inimigo_final = 0b00000001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
                                
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -1706,15 +1706,15 @@ void ataque_2 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                  
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
 
@@ -1742,614 +1742,433 @@ void ataque_2 (){
     especial = 0;
  }
 
-// ------------------------------------------------------------- Final Funcao Ataque_2 -----------------------------------------------------------------------
+// ------------------------------------------------------------- Final Funcao Ataque2 -----------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------ Inicio Funcao Ataque_3 ----------------------------------------------------------------------
-
-void ataque_3 (){
-
-
-int i = 0b00000000;                                         //contador posicao nave_inimigo
-int testa = 0b00000000;
-short explode_nave = 0b00000000;
-short tiro_especial;
-
-
-while (i<16)     {                                                            //execução rotina principal - andar naves
-
-       linha1 = 0b00000001;
-       Lcd_Cmd(_LCD_CLEAR);                                                  //onde será escrito o caracter de explosão de nave
-       Chama_Enterprise();                                                   //Chama nave_principal
-
-        switch (i) {
-
-                    case 1:
-                              Lcd_chr (1,16, 2);                                    //Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001111;                   //Armazena posicao do inimigo para teste posterior
-                              testa_inimigo1 = 0b00010000;                          //Atribui valor 16 para a variável
-                              Chama_Enterprise();                                   //Chama ultima posicao de nave principal na tela
-
-                              if ((button(&PORTD, 2, 200, 1))){                     //Se o bit 2 do portd estiver pressionado
-                                               store_tiro = posicao_nave;           //armazena na variavel a posicao da nave
-                                               nave_tiro();                         //testa se usuario pediu para ser lançado um tiro
-                                               testa_tiro = 0b00000001;             //atribui 1 a testa_tiro
-                                                              }
-                              testa = Testa_Tiro_Inimigo();                                         //chama a funcao testa_tiro, de modo que se coincidir, explode a nave
-                                                                                                    // e atribui valor 1 a testa
-
-                              if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)  {  //se a variável testa for = 1 e testa_primeira_explosao = 1
-                                           i = 15;        }                                         //i = 15, de modo que saia do for
-
-                              delay_ms (150);
-                              break;
-
-                     case 2:
-                              Lcd_chr (1,15, 2);                              // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001110;             //armazena posicao do inimigo para atualizar a tela
-                              testa_inimigo1 = 0b0001111;                     //armazena posicao inimigo para teste em colisao com tiro
-
-                              Chama_Enterprise();                            //Chama ultima posicao de nave principal na tela
-                              escreve_enterprise();                          //Testa se usuario quer mudar nave principal
-
-                              testa = Testa_Tiro_Inimigo();                  //recebe valor da funcao de teste tiro
-                              if (testa == 0b00000001){                      //se a função for = 1, armazena 15 no i
-                                            i = 15;                          //linha1 = 0 (reseta variável)
-                                            linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                            explode_nave = 0b00000001;
-                                                       }
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      } */
-                                                      
-                              if (explode_nave == 0b00000000){                            //se variavel for = 0 (testada anteriormente)
-                                          testa = Testa_Tiro_Inimigo();                   //recebe posicao da funcao
-                                                                                          //de lugar - linha 1 ou 2
-                                          if (testa_tiro == 0b00000001){                  //Testa se tiro = 1, e dessa forma executa a função tiro sem
-                                                   nave_tiro();                           //que o usuario pressione o botao
-                                                                       }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){          //se pressinado
-                                                           store_tiro = posicao_nave;           //store_posicao recebe posicao da nave
-                                                           nave_tiro();                         //chama funcao do tiro
-                                                           testa_tiro = 0b00000001;             //atribiui 1 a variável testa_tiro na função de chamar tiro
-                                                                               }                //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();                                         //recebe o valor da variavel Testa_Tiro_Inimigo à variavel testa
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){    //se testa for 1 OU testa_primeira_explosao for 1, atribui 15 ao i e sai do for
-                                                        i = 15;                                                 //Segue mesma linha de raciocínio nos casos seguintes
-                                                                                                           }
-                                                             }
-                              delay_ms (150);
-                              break;
-
-                     case 3:
-                              Lcd_chr (1,14, 2);                               // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001101;
-                              testa_inimigo1 = 0b00001110;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                        }
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }         */
-                                                      
-                               if (explode_nave == 0b00000000){
-                                              if (testa_tiro == 0b00000001){
-                                                       nave_tiro();
-                                                                           }
-
-                                              else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                            store_tiro = posicao_nave;
-                                                            nave_tiro();
-                                                            testa_tiro = 0b00000001;
-                                                                                  }            //testa se usuario pediu para ser lançado um tiro
-
-                                                            testa = Testa_Tiro_Inimigo();
-                                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                                          i = 15;         }
-                                                                            }
-                              delay_ms (150);
-                              break;
-
-                     case 4:
-                              Lcd_chr (1,13, 2);                              // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001100;
-                              testa_inimigo1 = 0b00001101;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }          */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                             store_tiro = posicao_nave;
-                                                             nave_tiro();
-                                                             testa_tiro = 0b00000001;
-                                                                                }            //testa se usuario pediu para ser lançado um tiro
-
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                          i = 15;         }
-                                                    }
-                              delay_ms (150);
-                              break;
-
-                      case 5:
-                              Lcd_chr (1,12, 2);                               // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001011;
-                              testa_inimigo1 = 0b00001100;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }       */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                               }            //testa se usuario pediu para ser lançado um tiro
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                    }
-                              delay_ms (300);
-                              break;
-
-                      case 6:
-                              Lcd_chr (1,11, 2);                               // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001010;
-                              testa_inimigo1 =  0b00001011;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }      */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                             store_tiro = posicao_nave;
-                                                             nave_tiro();
-                                                             testa_tiro = 0b00000001;
-                                                                                }            //testa se usuario pediu para ser lançado um tiro
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                          i = 15;         }
-                                                    }
-                              delay_ms (150);
-                              break;
-
-                      case 7:
-                              Lcd_chr (1,10, 2);                                // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001001;
-                              testa_inimigo1 =  0b00001010;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;}
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }         */
-                                                      
-                              if (explode_nave == 0){
-                                        if (testa_tiro == 1){
-                                                 nave_tiro();
-                                                           }
-
-                                        else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                         store_tiro = posicao_nave;
-                                                         nave_tiro();
-                                                         testa_tiro = 0b00000001;
-                                                                             }            //testa se usuario pediu para ser lançado um tiro
-
-                                         testa = Testa_Tiro_Inimigo();
-                                         if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                      i = 15;         }
-
-                                                 }
-                              delay_ms (150);
-                              break;
-
-                      case 8:
-                              Lcd_chr (1,9, 2);                                // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00001000;
-                              testa_inimigo1 =  0b00001001;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }       */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                                if (testa_tiro == 0b00000001){
-                                                         nave_tiro();
-                                                                   }
-
-                                                else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                                 store_tiro = posicao_nave;
-                                                                 nave_tiro();
-                                                                 testa_tiro = 0b00000001;
-                                                                                    }            //testa se usuario pediu para ser lançado um tiro
-
-                                                testa = Testa_Tiro_Inimigo();
-                                                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                              i = 15;         }
-                                                    }
-                              delay_ms (150);
-                              break;
-
-                      case 9:
-                              Lcd_chr (1,8, 2);                                // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00000111;
-                              testa_inimigo1 =  0b00001000;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;}
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }     */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                 }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                     }
-                              delay_ms (150);
-                              break;
-
-                       case 10:
-                              Lcd_chr (1,7, 2);                                // Nave Inimiga I
-                              armazena_pos_inimigo2 = 0b00000110;
-                              testa_inimigo1 =  0b00000111;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }   */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                                             }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                     }
-                              delay_ms (150);
-                              break;
-
-                       case 11:
-                              Lcd_chr (1,6, 2);                                // Nave Inimiga
-                              armazena_pos_inimigo2 = 0b00000101;
-                              testa_inimigo1 =  0b00000110;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }   */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                      if (testa_tiro == 0b00000001){
-                                               nave_tiro();
-                                                         }
-
-                                      else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                       store_tiro = posicao_nave;
-                                                       nave_tiro();
-                                                       testa_tiro = 0b00000001;
-                                                          }            //testa se usuario pediu para ser lançado um tiro
-
-                                      testa = Testa_Tiro_Inimigo();
-                                      if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                    i = 15;         }
-                                                     }
-                              delay_ms (150);
-                              break;
-
-                        case 12:
-                              Lcd_chr (1,5, 2);                                // Nave Inimiga
-                              armazena_pos_inimigo2 = 0b00000100;
-                              testa_inimigo1 =  0b00000101;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;}
-
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }            */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                        if (testa_tiro == 0b00000001){
-                                                 nave_tiro();
-                                                           }
-
-                                        else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                         store_tiro = posicao_nave;
-                                                         nave_tiro();
-                                                         testa_tiro = 0b00000001;
-                                                                             }            //testa se usuario pediu para ser lançado um tiro
-
-                                        testa = Testa_Tiro_Inimigo();
-                                        if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                      i = 15;         }
-                                                     }
-                              delay_ms (150);
-                              break;
-
-                        case 13:
-                               Lcd_chr (1,4, 2);                               // Nave Inimiga I
-                               armazena_pos_inimigo2 = 0b00000011;
-                               testa_inimigo1 =  0b00000100;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;}
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }  */
-                                                      
-                               if (explode_nave == 0b00000000){
-
-                                         if (testa_tiro == 0b00000001){
-                                                 nave_tiro();
-                                                                      }
-
-                                         else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                         store_tiro = posicao_nave;
-                                                         nave_tiro();
-                                                         testa_tiro = 0b00000001;
-                                                                              }            //testa se usuario pediu para ser lançado um tiro
-
-                                         testa = Testa_Tiro_Inimigo();
-                                         if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                      i = 15;                                             }
-                                                    }
-                               delay_ms (150);
-                               break;
-
-                        case 14:
-                               Lcd_chr (1,3, 2);                               // Nave Inimiga I
-                               armazena_pos_inimigo2 = 0b00000010;
-                               testa_inimigo1 =  0b00000011;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001; }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }        */
-                                                      
-                               if (explode_nave == 0b00000000){
-
-                                     if (testa_tiro == 0b00000001){
-                                             nave_tiro();
-                                                                  }
-
-                                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                     store_tiro = posicao_nave;
-                                                     nave_tiro();
-                                                     testa_tiro = 0b00000001;
-                                                                                                         }            //testa se usuario pediu para ser lançado um tiro
-
-                                    testa = Testa_Tiro_Inimigo();
-                                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                  i = 15;         }
-                                                      }
-
-                              delay_ms (150);
-                              break;
-
-
-                        case 15:
-                               Lcd_chr (1,2, 2);                               // Nave Inimiga I
-                               armazena_pos_inimigo2 = 0b00000001;
-                               testa_inimigo1 =  0b00000010;
-                               pos_inimigo_final = 0b00000001;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha1 = 0b00000000;
-                                            explode_nave = 0b00000001;}
-
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }   */
-                                                      
-                               if (explode_nave == 0){
-
-                                       if (testa_tiro == 0b00000001){
-                                               nave_tiro();
-                                                         }
-
-                                       else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                       store_tiro = posicao_nave;
-                                                       nave_tiro();
-                                                       testa_tiro = 0b00000001;
-                                                             }            //testa se usuario pediu para ser lançado um tiro
-
-                                        testa = Testa_Tiro_Inimigo();
-                                        if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                    i = 15;         }
-
-                                        else  if (pos_inimigo_final == 0b00000001) {
-                                                     GameOver();    }
-                                                      }
-                                delay_ms (150);
-                                break;
-                               }
-                 i++;
-             }
+// ------------------------------------------------------------ Inicio Funcao Ataque3 ----------------------------------------------------------------------
+
+void Ataque3 (){
+
+
+    int i = 0b00000000;     
+    int testa = 0b00000000;
+    short explode_nave = 0b00000000;
+    short tiro_especial;
+
+
+    while (i<16){                                                           
+        linha1 = 0b00000001;
+        Lcd_Cmd(_LCD_CLEAR);  
+        ChamaEnterprise();   
+        switch (i){
+            case 1:
+                Lcd_chr (1,16, 2);                
+                armazena_pos_inimigo2 = 0b00001111;                   
+                testa_inimigo1 = 0b00010000;                          
+                ChamaEnterprise();                                   
+
+                if ((button(&PORTD, 2, 200, 1))){                     
+                    store_tiro = posicao_nave;           
+                    NaveTiro();                         
+                    testa_tiro = 0b00000001;             
+                }
+                testa = TestaTiroInimigo(); 
+                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)    
+                    i = 15;                                                 
+                delay_ms (150);
+                break;
+            
+            case 2:
+                Lcd_chr (1,15, 2);
+                armazena_pos_inimigo2 = 0b00001110;
+                testa_inimigo1 = 0b0001111;
+                ChamaEnterprise();                            
+                EscreveEnterprise();                         
+                testa = TestaTiroInimigo();                  
+                if (testa == 0b00000001){                      
+                    i = 15;                          
+                    linha1 = 0b00000000;             
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){                         
+                    testa = TestaTiroInimigo();                   
+                    if (testa_tiro == 0b00000001)                
+                        NaveTiro();                           
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){ 
+                        store_tiro = posicao_nave;
+                        NaveTiro();              
+                        testa_tiro = 0b00000001;  
+                    }              
+                    testa = TestaTiroInimigo();                                    
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                                 
+                }
+                delay_ms (150);
+                break;
+
+            case 3:
+                Lcd_chr (1,14, 2);                              
+                armazena_pos_inimigo2 = 0b00001101;
+                testa_inimigo1 = 0b00001110;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }            
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 4:
+                Lcd_chr (1,13, 2);                              
+                armazena_pos_inimigo2 = 0b00001100;
+                testa_inimigo1 = 0b00001101;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }    
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 5:
+                Lcd_chr (1,12, 2);          
+                armazena_pos_inimigo2 = 0b00001011;
+                testa_inimigo1 = 0b00001100;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }
+
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                  }
+                  testa = TestaTiroInimigo();
+                  if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                      i = 15;         
+                }
+                delay_ms (300);
+                break;
+
+            case 6:
+                Lcd_chr (1,11, 2);                              
+                armazena_pos_inimigo2 = 0b00001010;
+                testa_inimigo1 =  0b00001011;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }
+
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }           
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 7:
+                Lcd_chr (1,10, 2);                               
+                armazena_pos_inimigo2 = 0b00001001;
+                testa_inimigo1 =  0b00001010;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0){
+                    if (testa_tiro == 1)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+
+                }
+                delay_ms (150);
+                break;
+
+            case 8:
+                Lcd_chr (1,9, 2);                         
+                armazena_pos_inimigo2 = 0b00001000;
+                testa_inimigo1 =  0b00001001;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }             
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 9:
+                Lcd_chr (1,8, 2);                                
+                armazena_pos_inimigo2 = 0b00000111;
+                testa_inimigo1 =  0b00001000;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }          
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 10:
+                Lcd_chr (1,7, 2);                                
+                armazena_pos_inimigo2 = 0b00000110;
+                testa_inimigo1 =  0b00000111;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 11:
+                Lcd_chr (1,6, 2);                                
+                armazena_pos_inimigo2 = 0b00000101;
+                testa_inimigo1 =  0b00000110;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 12:
+                Lcd_chr (1,5, 2);                                // Nave Inimiga
+                armazena_pos_inimigo2 = 0b00000100;
+                testa_inimigo1 =  0b00000101;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+
+            case 13:
+                Lcd_chr (1,4, 2);                  
+                armazena_pos_inimigo2 = 0b00000011;
+                testa_inimigo1 =  0b00000100;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                             
+                }
+                delay_ms (150);
+                break;
+
+            case 14:
+                Lcd_chr (1,3, 2);                             
+                armazena_pos_inimigo2 = 0b00000010;
+                testa_inimigo1 =  0b00000011;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001; 
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (150);
+                break;
+                        
+            case 15:
+                Lcd_chr (1,2, 2);
+                armazena_pos_inimigo2 = 0b00000001;
+                testa_inimigo1 =  0b00000010;
+                pos_inimigo_final = 0b00000001;
+
+                ChamaEnterprise();
+                EscreveEnterprise();
+
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha1 = 0b00000000;
+                    explode_nave = 0b00000001;}
+                    if (explode_nave == 0){
+                        if (testa_tiro == 0b00000001)
+                            NaveTiro();
+                        else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                            store_tiro = posicao_nave;
+                            NaveTiro();
+                            testa_tiro = 0b00000001;
+                        }         
+                        testa = TestaTiroInimigo();
+                        if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                            i = 15;         
+                        else  if (pos_inimigo_final == 0b00000001) 
+                            GameOver();    
+                  }
+                  delay_ms (150);
+                  break;
+            }
+        i++;
+    }
 
     tiro = 0b00000010;
     armazena_pos_inimigo1 = 0b00000000;
@@ -2364,624 +2183,425 @@ while (i<16)     {                                                            //
     explode_nave = 0b00000000;
     linha1 = 0b00000000;
     especial = 0;
-
- }
-// ------------------------------------------------------------- Final Funcao Ataque_3 -----------------------------------------------------------------------
+}
+// ------------------------------------------------------------- Final Funcao Ataque3 -----------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------  Inicio Funcao Ataque_4 ----------------------------------------------------------------------
+// ------------------------------------------------------------  Inicio Funcao Ataque4 ----------------------------------------------------------------------
 
-void ataque_4 (){
+void Ataque4 (){
 
+    int i = 0b00000000;                                       
+    int testa = 0b00000000;
+    short explode_nave = 0b00000000;
+    short tiro_especial;
 
-int i = 0b00000000;                                         //contador posicao nave_inimigo
-int testa = 0b00000000;
-short explode_nave = 0b00000000;
-short tiro_especial;
-
-while (i<16)     {                                                 //execução rotina principal - andar naves
-
+    while (i<16){                                        
         linha2 = 0b00000010;
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
-
-        switch (i) {
-
-                    case 1:
-                              Lcd_chr (2,16, 1);                               //Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001111;
-                              testa_inimigo2 =  0b00010000;
-
-                              if ((button(&PORTD, 2, 200, 1))){
-                                               store_tiro = posicao_nave;
-                                               nave_tiro();                   //testa se usuario pediu para ser lançado um tiro
-                                               testa_tiro = 0b00000001;
-                                                              }
-
-                             /* tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }   */
-                                                      
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                            i = 15;         }
-
-                              delay_ms (200);
-                              break;
-
-                     case 2:
-                              Lcd_chr (2,15, 1);                                // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001110;
-                              testa_inimigo2 =  0b00001111;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }          */
-                              
-                              if (explode_nave == 0){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                              }
-
-                                           else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                   }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                     }
-                              delay_ms (200);
-                              break;
-
-                     case 3:
-                              Lcd_chr (2,14, 1);                                // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001101;
-                              testa_inimigo2 =  0b00001110;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                             store_tiro = posicao_nave;
-                                                             nave_tiro();
-                                                             testa_tiro = 0b00000001;
-                                                                                  }            //testa se usuario pediu para ser lançado um tiro
-
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                          i = 15;         }
-                                                         }
-                              delay_ms (200);
-                              break;
-
-                     case 4:
-                              Lcd_chr (2,13, 1);                                // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001100;
-                              testa_inimigo2 =  0b00001101;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                            }
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                           else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                      }
-                              delay_ms (200);
-                              break;
-
-                      case 5:
-                              Lcd_chr (2,12, 1);                                // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001011;
-                              testa_inimigo2 =  0b00001100;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                            }
-                                            
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                     }
-                              delay_ms (200);
-                              break;
-
-                      case 6:
-                              Lcd_chr (2,11, 1);                                // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001010;
-                              testa_inimigo2 =  0b00001011;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                            }
-                                            
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b0000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                }            //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;         }
-                                                    }
-                              delay_ms (200);
-                              break;
-
-                      case 7:
-                              Lcd_chr (2,10, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001001;
-                              testa_inimigo2 =  0b00001010;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-                                             
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                        store_tiro = posicao_nave;
-                                                        nave_tiro();
-                                                        testa_tiro = 0b00000001;
-                                                                                                               }  //testa se usuario pediu para ser lançado um tiro
-
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;                                              }
-                                                             }
-                              delay_ms (200);
-                              break;
-
-                      case 8:
-                              Lcd_chr (2,9, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00001000;
-                              testa_inimigo2 =  0b00001001;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                      }
-                                                      
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                             store_tiro = posicao_nave;
-                                                             nave_tiro();
-                                                             testa_tiro = 0b00000001;
-                                                                                   }            //testa se usuario pediu para ser lançado um tiro
-
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                          i = 15;         }
-                                                      }
-                              delay_ms (200);
-                              break;
-
-                      case 9:
-                              Lcd_chr (2,8, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00000111;
-                              testa_inimigo2 =  0b00001000;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                      }
-                                                      
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                            if (testa_tiro == 0b00000001){
-                                                     nave_tiro();
-                                                               }
-
-                                            else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                             store_tiro = posicao_nave;
-                                                             nave_tiro();
-                                                             testa_tiro = 0b00000001;
-                                                                                                               }            //testa se usuario pediu para ser lançado um tiro
-
-                                            testa = Testa_Tiro_Inimigo();
-                                            if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                          i = 15;                                             }
-                                                             }
-                              delay_ms (200);
-                              break;
-
-                       case 10:
-                              Lcd_chr (2,7, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00000110;
-                              testa_inimigo2 =  0b00000111;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                      }
-                                                      
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                              if (testa_tiro == 0b00000001){
-                                                       nave_tiro();
-                                                                 }
-
-                                              else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                               store_tiro = posicao_nave;
-                                                               nave_tiro();
-                                                               testa_tiro = 0b00000001;
-                                                                                    }            //testa se usuario pediu para ser lançado um tiro
-
-                                              testa = Testa_Tiro_Inimigo();
-                                              if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                            i = 15;         }
-                                                     }
-                              delay_ms (200);
-                              break;
-
-                       case 11:
-                              Lcd_chr (2,6, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00000101;
-                              testa_inimigo2 =  0b00000110;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                      }
-                                                      
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-
-                                                                                                             }  //testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 1){
-                                                        i = 15;                                  }
-                                                            }
-                              delay_ms (200);
-                              break;
-
-                        case 12:
-                              Lcd_chr (2,5, 1);                                 // Nave Inimiga I
-                              armazena_pos_inimigo1 = 0b00000100;
-                              testa_inimigo2 =  0b00000101;
-
-                              Chama_Enterprise();
-                              escreve_enterprise();
-
-                              testa = Testa_Tiro_Inimigo();
-                              if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                                       }
-                                                       
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                          if (testa_tiro == 0b00000001){
-                                                   nave_tiro();
-                                                             }
-
-                                          else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                           store_tiro = posicao_nave;
-                                                           nave_tiro();
-                                                           testa_tiro = 0b00000001;
-                                                                                                            }//testa se usuario pediu para ser lançado um tiro
-
-                                          testa = Testa_Tiro_Inimigo();
-                                          if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                        i = 15;                                             }
-
-                                                             }
-                              delay_ms (200);
-                              break;
-
-                        case 13:
-                               Lcd_chr (2,4, 1);                                // Nave Inimiga I
-                               armazena_pos_inimigo1 = 0b00000011;
-                               testa_inimigo2 =  0b00000100;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-                                             
-                               /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                               if (explode_nave == 0b00000000){
-                                                  if (testa_tiro == 0b00000001){
-                                                                    nave_tiro();
-                                                                       }
-
-                                                  else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                                    store_tiro = posicao_nave;
-                                                                    nave_tiro();
-                                                                    testa_tiro = 0b00000001;
-                                                                                                                     }   //testa se usuario pediu para ser lançado um tiro
-
-                                                  testa = Testa_Tiro_Inimigo();
-                                                  if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                                    i = 15;                                        }
-                                                               }
-                              delay_ms (200);
-                              break;
-
-                        case 14:
-                               Lcd_chr (2,3, 1);                                // Nave Inimiga I
-                               armazena_pos_inimigo1 = 0b00000010;
-                               testa_inimigo2 =  0b00000011;
-                               pos_inimigo_final = 0b000000010;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-                                             
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                              if (testa_tiro == 0b00000001){
-                                                       nave_tiro();
-                                                                 }
-
-                                              else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                               store_tiro = posicao_nave;
-                                                               nave_tiro();
-                                                               testa_tiro = 0b00000001;
-                                                                                     }            //testa se usuario pediu para ser lançado um tiro
-
-                                              testa = Testa_Tiro_Inimigo();
-                                              if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                            i = 15;         }
-                                                      }
-                              delay_ms (200);
-                              break;
-
-                         case 15:
-                               Lcd_chr (2,2, 1);                                // Nave Inimiga I
-                               armazena_pos_inimigo1 = 0b00000001;
-                               testa_inimigo2 =  0b00000010;
-                               pos_inimigo_final = 0b00000001;
-
-                               Chama_Enterprise();
-                               escreve_enterprise();
-
-                               testa = Testa_Tiro_Inimigo();
-                               if (testa == 0b00000001){
-                                            i = 15;
-                                            linha2 = 0b00000000;
-                                            explode_nave = 0b00000001;
-                                             }
-                                             
-                              /*tiro_especial = special();
-                              if (tiro_especial == 1){
-                                                   i = 15;                          //linha1 = 0 (reseta variável)
-                                                   linha1 = 0b00000000;             //explode_nave = 1 e sai do for
-                                                   explode_nave = 0b00000001;
-                                                      }              */
-                                                      
-                              if (explode_nave == 0b00000000){
-                                                if (testa_tiro == 0b00000001){
-                                                         nave_tiro();
-                                                                   }
-
-                                                else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
-                                                                 store_tiro = posicao_nave;
-                                                                 nave_tiro();
-                                                                 testa_tiro = 0b00000001;
-                                                                                        }            //testa se usuario pediu para ser lançado um tiro
-
-                                                testa = Testa_Tiro_Inimigo();
-                                                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001){
-                                                              i = 15;         }
-
-
-                                                else  if (pos_inimigo_final == 0b00000001) {
-                                                               GameOver();    }
-                                                      }
-                              delay_ms (200);
-                              break;
-
-                              }
-                       i++;
-             }
+        ChamaEnterprise();
+        
+        switch (i){
+            case 1:
+                Lcd_chr (2,16, 1);          
+                armazena_pos_inimigo1 = 0b00001111;
+                testa_inimigo2 =  0b00010000;
+                if ((button(&PORTD, 2, 200, 1))){
+                    store_tiro = posicao_nave;
+                    NaveTiro();                   
+                    testa_tiro = 0b00000001;
+                }
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                    i = 15;         
+                delay_ms (200);
+                break;
+
+            case 2:
+                Lcd_chr (2,15, 1);                        
+                armazena_pos_inimigo1 = 0b00001110;
+                testa_inimigo2 =  0b00001111;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }        
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 3:
+                Lcd_chr (2,14, 1);                             
+                armazena_pos_inimigo1 = 0b00001101;
+                testa_inimigo2 =  0b00001110;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }          
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 4:
+                Lcd_chr (2,13, 1);                               
+                armazena_pos_inimigo1 = 0b00001100;
+                testa_inimigo2 =  0b00001101;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }    
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+                      
+            case 5:
+                Lcd_chr (2,12, 1);                          
+                armazena_pos_inimigo1 = 0b00001011;
+                testa_inimigo2 =  0b00001100;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }                           
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }  
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                    i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 6:
+                Lcd_chr (2,11, 1);                                
+                armazena_pos_inimigo1 = 0b00001010;
+                testa_inimigo2 =  0b00001011;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b0000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }           
+
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 7:
+                Lcd_chr (2,10, 1);                                 
+                armazena_pos_inimigo1 = 0b00001001;
+                testa_inimigo2 =  0b00001010;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }         
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();         
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }  
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                              
+                }
+                delay_ms (200);
+                break;
+
+            case 8:
+                Lcd_chr (2,9, 1);                                 
+                armazena_pos_inimigo1 = 0b00001000;
+                testa_inimigo2 =  0b00001001;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    } 
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 9:
+                Lcd_chr (2,8, 1);                                 
+                armazena_pos_inimigo1 = 0b00000111;
+                testa_inimigo2 =  0b00001000;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                             
+                }
+                delay_ms (200);
+                break;
+
+            case 10:
+                Lcd_chr (2,7, 1);                             
+                armazena_pos_inimigo1 = 0b00000110;
+                testa_inimigo2 =  0b00000111;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                } 
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001) 
+                        NaveTiro();                                                              
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }   
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 11:
+                Lcd_chr (2,6, 1);                                
+                armazena_pos_inimigo1 = 0b00000101;
+                testa_inimigo2 =  0b00000110;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }                                                                                                    
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();                                                             
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }  
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 1)
+                        i = 15;                                  
+                }
+                delay_ms (200);
+                break;
+
+            case 12:
+                Lcd_chr (2,5, 1);                            
+                armazena_pos_inimigo1 = 0b00000100;
+                testa_inimigo2 =  0b00000101;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }                                                    
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();                                                             
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                             
+                }
+                delay_ms (200);
+                break;
+
+            case 13:
+                Lcd_chr (2,4, 1);                                
+                armazena_pos_inimigo1 = 0b00000011;
+                testa_inimigo2 =  0b00000100;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();                                                                      
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }  
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;                                        
+                }
+                delay_ms (200);
+                break;
+            
+            case 14:
+                Lcd_chr (2,3, 1);                                
+                armazena_pos_inimigo1 = 0b00000010;
+                testa_inimigo2 =  0b00000011;
+                pos_inimigo_final = 0b000000010;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }                                                    
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }           
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                }
+                delay_ms (200);
+                break;
+
+            case 15:
+                Lcd_chr (2,2, 1);                               
+                armazena_pos_inimigo1 = 0b00000001;
+                testa_inimigo2 =  0b00000010;
+                pos_inimigo_final = 0b00000001;
+                ChamaEnterprise();
+                EscreveEnterprise();
+                testa = TestaTiroInimigo();
+                if (testa == 0b00000001){
+                    i = 15;
+                    linha2 = 0b00000000;
+                    explode_nave = 0b00000001;
+                }
+                if (explode_nave == 0b00000000){
+                    if (testa_tiro == 0b00000001)
+                        NaveTiro();
+                    else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
+                        store_tiro = posicao_nave;
+                        NaveTiro();
+                        testa_tiro = 0b00000001;
+                    }
+                    testa = TestaTiroInimigo();
+                    if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
+                        i = 15;         
+                    else  if (pos_inimigo_final == 0b00000001) 
+                        GameOver();    
+                }
+                delay_ms (200);
+                break;
+        }
+    i++;
+    }
 
     tiro = 0b00000010;
     testa = 0b00000000;
@@ -2998,13 +2618,13 @@ while (i<16)     {                                                 //execução ro
     especial = 0;
 
 }
-// -------------------------------------------------------------- Final Funcao Ataque_4 -----------------------------------------------------------------------
+// -------------------------------------------------------------- Final Funcao Ataque4 -----------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------  Inicio Funcao Ataque_5 ----------------------------------------------------------------------
+// ------------------------------------------------------------  Inicio Funcao Ataque5 ----------------------------------------------------------------------
 
-void ataque_5 (){
+void Ataque5 (){
 
     int i = 0b00000000;                                         //contador posicao nave_inimigo
     int testa = 0b00000000;
@@ -3015,22 +2635,22 @@ void ataque_5 (){
     while (i<16){                                                             
         linha1 = 0b00000001;
         Lcd_Cmd(_LCD_CLEAR);                                                  
-        Chama_Enterprise();                                                   
+        ChamaEnterprise();                                                   
 
         switch(i){
             case 1:
                 Lcd_chr (1,16, 1);                                    
                 armazena_pos_inimigo1 = 0b00001111;                   
                 testa_inimigo1 = 0b00010000;                          
-                Chama_Enterprise();                                   
+                ChamaEnterprise();                                   
 
                 if ((button(&PORTD, 2, 200, 1))){                     
                     store_tiro = posicao_nave;                        
-                    nave_tiro();                                      
+                    NaveTiro();                                      
                     testa_tiro = 0b00000001;                          
                 }
                                                       
-                testa = Testa_Tiro_Inimigo();                                                    
+                testa = TestaTiroInimigo();                                                    
                                                                                                  
                 if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)                
                     i = 15;                                                                      
@@ -3043,10 +2663,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001110;             
                 testa_inimigo1 = 0b0001111;                     
 
-                Chama_Enterprise();                            
-                escreve_enterprise();                          
+                ChamaEnterprise();                            
+                EscreveEnterprise();                          
 
-                testa = Testa_Tiro_Inimigo();                  
+                testa = TestaTiroInimigo();                  
                 if (testa == 0b00000001){                      
                     i = 15;                          
                     linha1 = 0b00000000;             
@@ -3054,18 +2674,18 @@ void ataque_5 (){
                 }
   
                 if (explode_nave == 0b00000000){     
-                    testa = Testa_Tiro_Inimigo();    
+                    testa = TestaTiroInimigo();    
                                                      
                     if (testa_tiro == 0b00000001)    
-                        nave_tiro();                 
+                        NaveTiro();                 
                                                                        
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){          
                         store_tiro = posicao_nave;          
-                        nave_tiro();                        
+                        NaveTiro();                        
                         testa_tiro = 0b00000001;            
                     }                                       
 
-                    testa = Testa_Tiro_Inimigo();                                        
+                    testa = TestaTiroInimigo();                                        
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)    
                         i = 15;                                                          
                                                                                                            
@@ -3078,10 +2698,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001101;
                 testa_inimigo1 = 0b00001110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3090,15 +2710,15 @@ void ataque_5 (){
                                                       
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                  
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     } 
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;
                 }
@@ -3110,10 +2730,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001100;
                 testa_inimigo1 = 0b00001101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3122,15 +2742,15 @@ void ataque_5 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                     i = 15;         
                 }
@@ -3138,14 +2758,14 @@ void ataque_5 (){
                 break;
 
             case 5:
-                //Lcd_chr (1,12, 1);                               // Nave Inimiga I
+                //Lcd_chr (1,12, 1);                               
                 armazena_pos_inimigo1 = 0b00001011;
                 testa_inimigo1 = 0b00001100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3154,14 +2774,14 @@ void ataque_5 (){
                                             
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3173,10 +2793,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001010;
                 testa_inimigo1 =  0b00001011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3185,15 +2805,15 @@ void ataque_5 (){
                                             
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
 
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }          
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3205,10 +2825,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001001;
                 testa_inimigo1 =  0b00001010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3217,14 +2837,14 @@ void ataque_5 (){
                                             
                 if (explode_nave == 0){
                     if (testa_tiro == 1)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     } 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
 
@@ -3237,10 +2857,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00001000;
                 testa_inimigo1 =  0b00001001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3249,15 +2869,15 @@ void ataque_5 (){
                
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
 
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }         
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3269,10 +2889,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00000111;
                 testa_inimigo1 =  0b00001000;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3281,15 +2901,15 @@ void ataque_5 (){
                                                                      
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3301,10 +2921,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00000110;
                 testa_inimigo1 =  0b00000111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3313,15 +2933,15 @@ void ataque_5 (){
                                                       
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3333,10 +2953,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00000101;
                 testa_inimigo1 =  0b00000110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3345,15 +2965,15 @@ void ataque_5 (){
       
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                 
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                     store_tiro = posicao_nave;
-                    nave_tiro();
+                    NaveTiro();
                     testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3361,31 +2981,31 @@ void ataque_5 (){
                 break;
 
             case 12:
-                //Lcd_chr (1,5, 1);                                // Nave Inimiga
+                //Lcd_chr (1,5, 1);                               
                 armazena_pos_inimigo1 = 0b00000100;
                 testa_inimigo1 =  0b00000101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
                     explode_nave = 0b00000001;
                 }
-                
+                  
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                            
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3397,10 +3017,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00000011;
                 testa_inimigo1 =  0b00000100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3409,15 +3029,15 @@ void ataque_5 (){
                                            
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                     
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
                 }
@@ -3429,10 +3049,10 @@ void ataque_5 (){
                 armazena_pos_inimigo1 = 0b00000010;
                 testa_inimigo1 =  0b00000011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha1 = 0b00000000;
@@ -3440,15 +3060,15 @@ void ataque_5 (){
                                                       
                     if (explode_nave == 0b00000000){
                         if (testa_tiro == 0b00000001)
-                            nave_tiro();
+                            NaveTiro();
                         
                         else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                             store_tiro = posicao_nave;
-                            nave_tiro();
+                            NaveTiro();
                             testa_tiro = 0b00000001;
                         } 
 
-                        testa = Testa_Tiro_Inimigo();
+                        testa = TestaTiroInimigo();
                         if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                             i = 15;         
                     }
@@ -3461,10 +3081,10 @@ void ataque_5 (){
                     testa_inimigo1 =  0b00000010;
                     pos_inimigo_final = 0b00000001;
 
-                    Chama_Enterprise();
-                    escreve_enterprise();
+                    ChamaEnterprise();
+                    EscreveEnterprise();
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001){
                         i = 15;
                         linha1 = 0b00000000;
@@ -3473,15 +3093,15 @@ void ataque_5 (){
                                   
                     if (explode_nave == 0){
                         if (testa_tiro == 0b00000001)
-                          nave_tiro();
+                          NaveTiro();
                         
                         else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                             store_tiro = posicao_nave;
-                            nave_tiro();
+                            NaveTiro();
                             testa_tiro = 0b00000001;
                         }
 
-                        testa = Testa_Tiro_Inimigo();
+                        testa = TestaTiroInimigo();
                         if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                             i = 15;         
                         
@@ -3509,14 +3129,14 @@ void ataque_5 (){
 
 }
 
-// ------------------------------------------------------------- Final Funcao Ataque_5 -----------------------------------------------------------------------
+// ------------------------------------------------------------- Final Funcao Ataque5 -----------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------  Inicio Funcao Ataque_6 ----------------------------------------------------------------------
+// -----------------------------------------------------------  Inicio Funcao Ataque6 ----------------------------------------------------------------------
 
-void ataque_6 (){
+void Ataque6 (){
 
     int i = 0b00000000;                                                          
     int testa = 0b00000000;
@@ -3526,7 +3146,7 @@ void ataque_6 (){
     while (i<16){           
         linha2 = 0b00000010;
         Lcd_Cmd(_LCD_CLEAR);
-        Chama_Enterprise();
+        ChamaEnterprise();
         switch (i) {
             case 1:
                 Lcd_chr (2,16, 6);                                                
@@ -3535,25 +3155,26 @@ void ataque_6 (){
 
                 if ((button(&PORTD, 2, 200, 1))){
                     store_tiro = posicao_nave;
-                    nave_tiro();                                                   
+                    NaveTiro();                                                   
                     testa_tiro = 0b00000001;
                 }
-                                                                                    
-                testa = Testa_Tiro_Inimigo();
+                                                               
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                     i = 15;         
                 
                 delay_ms (200);
                 break;
+
             case 2:
                 Lcd_chr (2,15, 6);                                                  
                 armazena_pos_inimigo3 = 0b00001110;
                 testa_inimigo2 =  0b00001111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3562,15 +3183,15 @@ void ataque_6 (){
                                                                            
                 if (explode_nave == 0){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                               
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                                                 
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                     }
@@ -3582,10 +3203,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001101;
                 testa_inimigo2 =  0b00001110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3594,15 +3215,15 @@ void ataque_6 (){
                                                              
                 if (explode_nave == 0){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                 else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                     store_tiro = posicao_nave;
-                    nave_tiro();
+                    NaveTiro();
                     testa_tiro = 0b00000001;
                 }                                                                   
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                     i = 15;         
                 }
@@ -3614,10 +3235,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001100;
                 testa_inimigo2 =  0b00001101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3626,15 +3247,15 @@ void ataque_6 (){
                                         
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                             
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                                                         i = 15;         
                     }
@@ -3646,10 +3267,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001011;
                 testa_inimigo2 =  0b00001100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3658,15 +3279,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
      
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                                          
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                     }
@@ -3678,10 +3299,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001010;
                 testa_inimigo2 =  0b00001011;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3690,15 +3311,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b0000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                              
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                             
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3710,10 +3331,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001001;
                 testa_inimigo2 =  0b00001010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3722,15 +3343,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                               
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                                 
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                              
                 }
@@ -3742,10 +3363,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00001000;
                 testa_inimigo2 =  0b00001001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3754,15 +3375,15 @@ void ataque_6 (){
                               
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                    nave_tiro();
+                    NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                                         
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3774,10 +3395,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00000111;
                 testa_inimigo2 =  0b00001000;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3785,15 +3406,15 @@ void ataque_6 (){
                 }
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }                                                          
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
                 }
@@ -3805,10 +3426,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00000110;
                 testa_inimigo2 =  0b00000111;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3817,15 +3438,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                  
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }           
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                     }
@@ -3837,10 +3458,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00000101;
                 testa_inimigo2 =  0b00000110;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3849,14 +3470,14 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                  
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 1)
                         i = 15;                                  
                 }
@@ -3868,10 +3489,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00000100;
                 testa_inimigo2 =  0b00000101;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3880,15 +3501,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                           
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                             
 
@@ -3901,10 +3522,10 @@ void ataque_6 (){
                 armazena_pos_inimigo3 = 0b00000011;
                 testa_inimigo2 =  0b00000100;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                   linha2 = 0b00000000;
@@ -3913,15 +3534,15 @@ void ataque_6 (){
                                
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                          
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;                                        
                 }
@@ -3934,10 +3555,10 @@ void ataque_6 (){
                 testa_inimigo2 =  0b00000011;
                 pos_inimigo_final = 0b000000010;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3946,15 +3567,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                  
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }          
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
                 }
@@ -3967,10 +3588,10 @@ void ataque_6 (){
                 testa_inimigo2 =  0b00000010;
                 pos_inimigo_final = 0b00000001;
 
-                Chama_Enterprise();
-                escreve_enterprise();
+                ChamaEnterprise();
+                EscreveEnterprise();
 
-                testa = Testa_Tiro_Inimigo();
+                testa = TestaTiroInimigo();
                 if (testa == 0b00000001){
                     i = 15;
                     linha2 = 0b00000000;
@@ -3979,15 +3600,15 @@ void ataque_6 (){
 
                 if (explode_nave == 0b00000000){
                     if (testa_tiro == 0b00000001)
-                        nave_tiro();
+                        NaveTiro();
                                                                    
                     else if ((button(&PORTD, 2, 200, 1)) && (testa_tiro == 0b00000000)){
                         store_tiro = posicao_nave;
-                        nave_tiro();
+                        NaveTiro();
                         testa_tiro = 0b00000001;
                     }            
 
-                    testa = Testa_Tiro_Inimigo();
+                    testa = TestaTiroInimigo();
                     if (testa == 0b00000001 || testa_primeira_explosao == 0b00000001)
                         i = 15;         
 
@@ -4015,7 +3636,7 @@ void ataque_6 (){
     especial = 0;
 }
 
-// --------------------------------------------------------------- Final Funcao Ataque_6 -----------------------------------------------------------------------
+// --------------------------------------------------------------- Final Funcao Ataque6 -----------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------- Inicio Funcao Menu ----------------------------------------------------------------------
@@ -4224,14 +3845,14 @@ int Boss(){
     do {
         Boss_teste = 0b0000001;
         Lcd_Cmd(_LCD_CLEAR);                                                  //onde será escrito o caracter de explosão de nave
-        Chama_Enterprise();                                                   //Chama nave_principal
+        ChamaEnterprise();                                                   //Chama nave_principal
         Lcd_chr (1,16, 7);                                                    //Escreve na tela, coluna 1, uma parte do boss
         Lcd_chr (2,16, 7);                                                    //Escreve na tela, coluna 2, a outra parte do boss
-        escreve_enterprise();                                                 //Testa se usuario quer mudar nave principal
+        EscreveEnterprise();                                                 //Testa se usuario quer mudar nave principal
 
 
         if (testa_tiro2 == 0b00000001){                                       //Testa se tiro = 1, e dessa forma executa a função tiro sem
-            nave_tiro();                                                      //que o usuario pressione o botao
+            NaveTiro();                                                      //que o usuario pressione o botao
             Lcd_chr (1,16, 7);                                                //Escreve na tela, coluna 1, uma parte do boss
             Lcd_chr (2,16, 7);                                                //Escreve na tela, coluna 2, a outra parte do boss
             conta_tiro++;
@@ -4239,7 +3860,7 @@ int Boss(){
 
         else if ((button(&PORTD, 2, 200, 1))){   //Se o bit 2 do portd estiver pressionado
             store_tiro = posicao_nave;           //armazena na variavel a posicao da nave
-            nave_tiro();                         //testa se usuario pediu para ser lançado um tiro
+            NaveTiro();                         //testa se usuario pediu para ser lançado um tiro
             Lcd_chr (1,16, 7);                   //Escreve na tela, coluna 1, uma parte do boss
             Lcd_chr (2,16, 7);                   //Escreve na tela, coluna 2, a outra parte do boss
             testa_tiro2 = 0b00000001;            //atribui 1 a testa_tiro
@@ -4287,7 +3908,7 @@ int Boss(){
     }
                       
     else if ((dano_boss1 == 4) && (dano_boss2 == 4)){
-        Win_Game();
+        WinGame();
         return 1;
     }
                                                      
@@ -4333,19 +3954,19 @@ comeco:
 
 inicio_jogo:
 
-  var_random = random();                //Chama funcao randomica - Testado cada valor de acordo com funcao pré-definida
+  var_random = Random();                //Chama funcao randomica - Testado cada valor de acordo com funcao pré-definida
                                         //no topo do código - Lógica de geraçâo "randomica pré definida"
   if (var_random == 1){                //Executa rotina de acordo com a variavel randomica gerada pelo PIC
                                         //Segue sequencia pré definida por programados, testando,intercaladamente, se foi ou nao game over
       for (k = 0; k<2; k++){            //Repete testes abaixo, mais 4 vezes
-          ataque_1();
-          ataque_3();
+          Ataque1();
+          Ataque3();
           especial = 0b00000001;
-          ataque_4();
-          ataque_2();
+          Ataque4();
+          Ataque2();
           especial = 0b00000001;
-          ataque_5();
-          ataque_6();
+          Ataque5();
+          Ataque6();
           especial = 0b00000001;
       }
                            
@@ -4362,8 +3983,8 @@ inicio_jogo:
           goto inicio_jogo;
       }
                                  
-      ataque_3();                   //E chamará as funções Boss, 16 vezes, de modo que o usuário deva dividir os ataques no boss
-      ataque_4();                   //de 1 a 1, a modo de destruí-los simultaneamente. Caso contrário, é game over e nave do usuário é destruida
+      Ataque3();                   //E chamará as funções Boss, 16 vezes, de modo que o usuário deva dividir os ataques no boss
+      Ataque4();                   //de 1 a 1, a modo de destruí-los simultaneamente. Caso contrário, é game over e nave do usuário é destruida
      
       testa_final = Boss();
       if (testa_final == 1)
@@ -4375,8 +3996,8 @@ inicio_jogo:
           delay_ms (3000);
           goto inicio_jogo;
       }
-      ataque_2();
-      ataque_5();
+      Ataque2();
+      Ataque5();
 
       testa_final = Boss();
       if (testa_final == 1)
@@ -4388,8 +4009,8 @@ inicio_jogo:
           delay_ms (3000);
           goto inicio_jogo;
       }
-      ataque_6();
-      ataque_6();
+      Ataque6();
+      Ataque6();
 
       testa_final = Boss();
       if (testa_final == 1)
@@ -4401,8 +4022,8 @@ inicio_jogo:
           delay_ms (3000);
           goto inicio_jogo;
       }
-      ataque_1();
-      ataque_2();
+      Ataque1();
+      Ataque2();
      
       if (game_over == 1){
           testa_final = Boss();
@@ -4415,8 +4036,8 @@ inicio_jogo:
               delay_ms (3000);
               goto inicio_jogo;
           }
-          ataque_4();
-          ataque_5();
+          Ataque4();
+          Ataque5();
      
           testa_final = Boss();
           if (testa_final == 1)
@@ -4429,8 +4050,8 @@ inicio_jogo:
               goto inicio_jogo;
           }
 
-          ataque_5();
-          ataque_6();
+          Ataque5();
+          Ataque6();
 
           testa_final = Boss();
           if (testa_final == 1)
@@ -4443,8 +4064,8 @@ inicio_jogo:
               goto inicio_jogo;
           }
 
-          ataque_6();
-          ataque_3();
+          Ataque6();
+          Ataque3();
 
           testa_final = Boss();
           if (testa_final == 1)
@@ -4460,15 +4081,15 @@ inicio_jogo:
     }
     else if (var_random == 2){
         for (k = 0; k<2; k++){
-            ataque_5();
-            ataque_2();
+            Ataque5();
+            Ataque2();
             especial = 0b00000001;     
-            ataque_4();
-            ataque_6();
+            Ataque4();
+            Ataque6();
             especial = 0b00000001;
-            ataque_3();
+            Ataque3();
             especial = 0b00000001;
-            ataque_1();
+            Ataque1();
             especial = 0b00000001;
         }
         
@@ -4484,8 +4105,8 @@ inicio_jogo:
             goto inicio_jogo;
         }
 
-        ataque_2();
-        ataque_3();
+        Ataque2();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4497,8 +4118,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_1();
-        ataque_4();
+        Ataque1();
+        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4510,8 +4131,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_4();
-        ataque_5();
+        Ataque4();
+        Ataque5();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4523,8 +4144,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_6();
-        ataque_6();
+        Ataque6();
+        Ataque6();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4536,8 +4157,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
           }
-        ataque_5();
-        ataque_6();
+        Ataque5();
+        Ataque6();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4549,8 +4170,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_3();
-        ataque_4();
+        Ataque3();
+        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4562,8 +4183,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_2();
-        ataque_5();
+        Ataque2();
+        Ataque5();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4579,14 +4200,14 @@ inicio_jogo:
 
     else if (var_random == 3){
         for (k = 0; k<2; k++){
-            ataque_3();
-            ataque_2();
+            Ataque3();
+            Ataque2();
             especial = 0b00000001;
-            ataque_5();
-            ataque_4();
+            Ataque5();
+            Ataque4();
             especial = 0b00000001;
-            ataque_1();
-            ataque_6();
+            Ataque1();
+            Ataque6();
             especial = 0b00000001;
         }
 
@@ -4603,8 +4224,8 @@ inicio_jogo:
             goto inicio_jogo;
         }
 
-        ataque_5();
-        ataque_4();
+        Ataque5();
+        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4616,8 +4237,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_6();
-        ataque_3();
+        Ataque6();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4629,8 +4250,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_2();
-        ataque_5();
+        Ataque2();
+        Ataque5();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4642,8 +4263,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_1();
-        ataque_3();
+        Ataque1();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4655,8 +4276,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_4();
-        ataque_3();
+        Ataque4();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4668,8 +4289,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_1();
-        ataque_2();
+        Ataque1();
+        Ataque2();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4681,8 +4302,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_6();
-        ataque_4();
+        Ataque6();
+        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4698,14 +4319,14 @@ inicio_jogo:
 
     else if (var_random == 4){
         for (k = 0; k<2; k++){
-            ataque_4();
-            ataque_5();
+            Ataque4();
+            Ataque5();
             especial = 0b00000001;
-            ataque_1();
-            ataque_6();
+            Ataque1();
+            Ataque6();
             especial = 0b00000001;
-            ataque_3();
-            ataque_2();
+            Ataque3();
+            Ataque2();
             especial = 0b00000001;
         }
                            
@@ -4722,8 +4343,8 @@ inicio_jogo:
             goto inicio_jogo;
         }
 
-        ataque_2();
-        ataque_1();
+        Ataque2();
+        Ataque1();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4735,8 +4356,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_3();
-        ataque_4();
+        Ataque3();
+        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4748,8 +4369,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_6();
-        ataque_3();
+        Ataque6();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4762,8 +4383,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_2();
-        ataque_1();
+        Ataque2();
+        Ataque1();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4775,8 +4396,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_4();
-        ataque_6();
+        Ataque4();
+        Ataque6();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4788,8 +4409,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_6();
-        ataque_2();
+        Ataque6();
+        Ataque2();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -4801,8 +4422,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        ataque_1();
-        ataque_3();
+        Ataque1();
+        Ataque3();
 
         testa_final = Boss();
         if (testa_final == 1)
