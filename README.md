@@ -52,7 +52,11 @@ Os arquivos .c e .h:
 8. 1 x Capacitor de 100nF </br>
 10. 1 x Conector com fios para baterias de 9V
 
-em desenvolvimento....
+em andamento....
+
+## Como Jogar?
+
+em andamento...
 
 ## Direitos
 
