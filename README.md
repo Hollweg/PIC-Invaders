@@ -12,7 +12,8 @@ O projeto foi desenvolvido utilizando a plataforma CUSCO-PIC, desenvolvida em **
 
 ## Utilidade
 
-O código foi desenvolvido especificamente para microcontroladores da **Microchip**. </br>
+O código foi desenvolvido especificamente para microcontroladores da **Microchip**. 
+
 Entretanto, sendo feitas algumas modificações de inicalização e configuração de alguns registradores (principalmente de entrada e saída), e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outros fabricantes. 
 
 Sobretudo, foi desenvolvido com foco nas **plataformas PIC**. </br>
