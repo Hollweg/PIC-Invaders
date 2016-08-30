@@ -76,7 +76,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,6, txt8);
         Lcd_out (2,4, txt9);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -84,7 +88,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,3, txt10);
         Lcd_out (2,6, txt11);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -92,7 +100,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,1, txt12);
         Lcd_out (2,2, txt13);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -100,7 +112,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,3, txt14);
         Lcd_out (2,1, txt15);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -108,7 +124,11 @@ menu:
           Lcd_Cmd(_LCD_CLEAR);
           Lcd_out (1,2, txt16);
           Lcd_out (2,1, txt17);
+<<<<<<< HEAD
           delay_ms (4000);
+=======
+          delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -116,7 +136,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,2, txt18);
         Lcd_out (2,3, txt19);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -124,7 +148,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,2, txt20);
         Lcd_out (2,1, txt21);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -132,7 +160,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,1, txt22);
         Lcd_out (2,2, txt23);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -140,7 +172,11 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,1, txt24);
         Lcd_out (2,4, txt25);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         if (button(&PORTD, 0, 200, 1))
             goto nivel1;
@@ -148,18 +184,30 @@ menu:
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,1, txt26);
         Lcd_out (2,2, txt27);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,1, txt28);
         Lcd_out (2,4, txt35);
+<<<<<<< HEAD
         delay_ms (4000);
+=======
+        delay_ms (3000);
+>>>>>>> v8
 
 nivel1:
 
         Lcd_Cmd(_LCD_CLEAR);
         Lcd_out (1,5, txt34);
+<<<<<<< HEAD
         delay_ms (5000);
+=======
+        delay_ms (4000);
+>>>>>>> v8
 
         return;
     }

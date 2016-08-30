@@ -44,8 +44,13 @@ int GameOver() {
     }
 
     Lcd_Cmd(_LCD_CLEAR);
+<<<<<<< HEAD
     Lcd_out (1,3, "GAME OVER!!");
     delay_ms(5000);
+=======
+    Lcd_out (1,3, "GAME OVER!!!");
+    delay_ms(3000);
+>>>>>>> v8
 
     if (boss_teste == 1) {
         game_over = 1;

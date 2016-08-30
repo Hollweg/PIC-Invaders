@@ -7,19 +7,19 @@
 
 #include "main.h"
 
-sbit LCD_RS at LATB1_bit;
-sbit LCD_EN at LATB0_bit;
-sbit LCD_D4 at LATB4_bit;
-sbit LCD_D5 at LATB5_bit;
-sbit LCD_D6 at LATB6_bit;
-sbit LCD_D7 at LATB7_bit;
+sbit LCD_RS at LATC5_bit;
+sbit LCD_EN at LATC7_bit;
+sbit LCD_D4 at LATC0_bit;
+sbit LCD_D5 at LATC1_bit;
+sbit LCD_D6 at LATC2_bit;
+sbit LCD_D7 at LATC3_bit;
 
-sbit LCD_RS_Direction at TRISB1_bit;
-sbit LCD_EN_Direction at TRISB0_bit;
-sbit LCD_D4_Direction at TRISB4_bit;
-sbit LCD_D5_Direction at TRISB5_bit;
-sbit LCD_D6_Direction at TRISB6_bit;
-sbit LCD_D7_Direction at TRISB7_bit;
+sbit LCD_RS_Direction at TRISC5_bit;
+sbit LCD_EN_Direction at TRISC7_bit;
+sbit LCD_D4_Direction at TRISC0_bit;
+sbit LCD_D5_Direction at TRISC1_bit;
+sbit LCD_D6_Direction at TRISC2_bit;
+sbit LCD_D7_Direction at TRISC3_bit;
 
 short posicao_nave = 0b00000001;                            // posicao da minha nave principal
 short armazena_enterprise = 0b00000000;                     // armazena posicao nave principal para chamada e escrita de funçao
@@ -60,10 +60,10 @@ void main(){
   short testa_final;
   short k;
 
-  TRISB = 0b00000000;
+  TRISC = 0b00000000;
   TRISD = 0b00001111;
 
-  PORTB = 0;
+  PORTC = 0;
   PORTD = 0;
 
   ANSELA = 0;
@@ -90,18 +90,14 @@ inicio_jogo:
                                         //Segue sequencia pré definida por programados, testando,intercaladamente, se foi ou nao game over
       for (k = 0; k<2; k++){            //Repete testes abaixo, mais 4 vezes
           Ataque1();
-          Ataque3();
           especial = 0b00000001;
           Ataque4();
+          Ataque3();
+          especial = 0b00000001;
           Ataque2();
           especial = 0b00000001;
-          Ataque5();
-          Ataque6();
-          especial = 0b00000001;
       }
-
       k = 0;
-
       testa_final = Boss();         //Testa o valor da funcao Boss
       if (testa_final == 1)         //se 1, parabéns, jogo terminado e de volta a tela inicial  - reseta o game
           goto comeco;              //se 0, a nave do usuário é destruída e o jogo é recomeçado
@@ -127,7 +123,7 @@ inicio_jogo:
           goto inicio_jogo;
       }
       Ataque2();
-      Ataque5();
+      Ataque1();
 
       testa_final = Boss();
       if (testa_final == 1)
@@ -139,8 +135,8 @@ inicio_jogo:
           delay_ms (3000);
           goto inicio_jogo;
       }
-      Ataque6();
-      Ataque6();
+      Ataque3();
+      Ataque3();
 
       testa_final = Boss();
       if (testa_final == 1)
@@ -152,8 +148,8 @@ inicio_jogo:
           delay_ms (3000);
           goto inicio_jogo;
       }
-      Ataque1();
       Ataque2();
+      Ataque4();
 
       if (game_over == 1){
           testa_final = Boss();
@@ -166,8 +162,8 @@ inicio_jogo:
               delay_ms (3000);
               goto inicio_jogo;
           }
-          Ataque4();
-          Ataque5();
+          Ataque1();
+          Ataque3();
 
           testa_final = Boss();
           if (testa_final == 1)
@@ -180,8 +176,8 @@ inicio_jogo:
               goto inicio_jogo;
           }
 
-          Ataque5();
-          Ataque6();
+          Ataque2();
+          Ataque4();
 
           testa_final = Boss();
           if (testa_final == 1)
@@ -194,8 +190,8 @@ inicio_jogo:
               goto inicio_jogo;
           }
 
-          Ataque6();
           Ataque3();
+          Ataque1();
 
           testa_final = Boss();
           if (testa_final == 1)
@@ -211,11 +207,11 @@ inicio_jogo:
     }
     else if (var_random == 2){
         for (k = 0; k<2; k++){
-            Ataque5();
-            Ataque2();
+            Ataque1();
+            Ataque4();
             especial = 0b00000001;
             Ataque4();
-            Ataque6();
+            Ataque2();
             especial = 0b00000001;
             Ataque3();
             especial = 0b00000001;
@@ -262,7 +258,7 @@ inicio_jogo:
             goto inicio_jogo;
         }
         Ataque4();
-        Ataque5();
+        Ataque2();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -274,8 +270,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        Ataque6();
-        Ataque6();
+        Ataque3();
+        Ataque1();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -287,21 +283,8 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
           }
-        Ataque5();
-        Ataque6();
-
-        testa_final = Boss();
-        if (testa_final == 1)
-            goto comeco;
-
-        else if (testa_final == 0){
-            Lcd_Cmd(_LCD_CLEAR);
-            Lcd_Out (1, 4, "Nivel 1");
-            delay_ms (3000);
-            goto inicio_jogo;
-        }
+        Ataque1();
         Ataque3();
-        Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -313,8 +296,21 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
+        Ataque4();
         Ataque2();
-        Ataque5();
+
+        testa_final = Boss();
+        if (testa_final == 1)
+            goto comeco;
+
+        else if (testa_final == 0){
+            Lcd_Cmd(_LCD_CLEAR);
+            Lcd_Out (1, 4, "Nivel 1");
+            delay_ms (3000);
+            goto inicio_jogo;
+        }
+        Ataque4();
+        Ataque2();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -333,11 +329,11 @@ inicio_jogo:
             Ataque3();
             Ataque2();
             especial = 0b00000001;
-            Ataque5();
+            Ataque1();
             Ataque4();
             especial = 0b00000001;
             Ataque1();
-            Ataque6();
+            Ataque3();
             especial = 0b00000001;
         }
 
@@ -354,38 +350,12 @@ inicio_jogo:
             goto inicio_jogo;
         }
 
-        Ataque5();
+        Ataque3();
         Ataque4();
 
         testa_final = Boss();
         if (testa_final == 1)
              goto comeco;
-
-        else if (testa_final == 0){
-            Lcd_Cmd(_LCD_CLEAR);
-            Lcd_Out (1, 4, "Nivel 1");
-            delay_ms (3000);
-            goto inicio_jogo;
-        }
-        Ataque6();
-        Ataque3();
-
-        testa_final = Boss();
-        if (testa_final == 1)
-            goto comeco;
-
-        else if (testa_final == 0){
-            Lcd_Cmd(_LCD_CLEAR);
-            Lcd_Out (1, 4, "Nivel 1");
-            delay_ms (3000);
-            goto inicio_jogo;
-        }
-        Ataque2();
-        Ataque5();
-
-        testa_final = Boss();
-        if (testa_final == 1)
-            goto comeco;
 
         else if (testa_final == 0){
             Lcd_Cmd(_LCD_CLEAR);
@@ -406,8 +376,34 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
+        Ataque2();
+        Ataque1();
+
+        testa_final = Boss();
+        if (testa_final == 1)
+            goto comeco;
+
+        else if (testa_final == 0){
+            Lcd_Cmd(_LCD_CLEAR);
+            Lcd_Out (1, 4, "Nivel 1");
+            delay_ms (3000);
+            goto inicio_jogo;
+        }
+        Ataque1();
         Ataque4();
-        Ataque3();
+
+        testa_final = Boss();
+        if (testa_final == 1)
+            goto comeco;
+
+        else if (testa_final == 0){
+            Lcd_Cmd(_LCD_CLEAR);
+            Lcd_Out (1, 4, "Nivel 1");
+            delay_ms (3000);
+            goto inicio_jogo;
+        }
+        Ataque4();
+        Ataque2();
 
         testa_final = Boss();
         if (testa_final == 1)
@@ -432,7 +428,7 @@ inicio_jogo:
             delay_ms (3000);
             goto inicio_jogo;
         }
-        Ataque6();
+        Ataque3();
         Ataque4();
 
         testa_final = Boss();

@@ -79,6 +79,7 @@ int Random(){
     srand (randomico);                                   //gera numero aleatorio toda vez q executar o programa
     alea = rand()%255;                                   //%255 gera de 0  a 255 ai você define o valor q quiser
 
+<<<<<<< HEAD
     if ((alea>= 0) && (alea<50))                         // Divide o numero char em 6 posiçoes, de forma com que de acordo com o numero
         random = 1;                                      // randomico gerado, ele entra em um uma ordem "randomica pré definida"
                                                          // no main da funçao
@@ -97,3 +98,17 @@ int Random(){
     return random;
 
 }//~ final Random
+=======
+    if ((alea>= 0) && (alea<80))                         // Divide o numero char em 6 posiçoes, de forma com que de acordo com o numero
+        random = 1;                                      // randomico gerado, ele entra em um uma ordem "randomica pré definida"
+                                                         // no main da funçao
+    else if ((alea>= 80) && (alea<160))
+        random = 2;
+
+    else if (alea>= 160)
+        random = 3;
+
+    return random;
+
+}//~ final Random
+>>>>>>> v8
