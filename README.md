@@ -76,18 +76,21 @@ Abaixo, ficam algumas imagens do hardware montado no software Proteus, e do seu 
 
 **Hardware montado em software e sendo simulado:**
 
-![Imgur](http://i.imgur.com/GbyrLvf.png) </br>
-![Imgur](http://i.imgur.com/3AJewfv.png) </br>
-![Imgur](http://i.imgur.com/XVyv2A0.png) </br>
-![Imgur](http://i.imgur.com/AgxpiH6.png) </br>
+![Imgur](http://i.imgur.com/GbyrLvf.png) 
+
+![Imgur](http://i.imgur.com/3AJewfv.png) 
+
+![Imgur](http://i.imgur.com/XVyv2A0.png) 
+
+![Imgur](http://i.imgur.com/AgxpiH6.png) 
 
 ## Implementações Futuras
 
-O que poderia ser melhorado? </br>
-Penso que poderia ser portado o game para um display maior, talvez um display LCD 4x20 ou então algum outro hardware maior. </br>
-O game pode ser otimizado, conforme comentei no início do documento, bem como podem ser implementados novos níveis, novos inimigos, etc.. </br>
-Além disso, tendo em vista a implementação em hardware mais apropriado, seria interessante desenvolver novos níveis e um sistema de contagem de pontos. </br>
-Não pretendo lançar muitos updates para o game. Não nesse momento, pelo menos, pois estou envolvido em outros projetos e esse é um projeto bastante antigo. Todavia, caso tenha alguma contribuição, por gentileza, faça e me avise, ficarei muito feliz em ver. :))
+**O que poderia ser melhorado?** </br>
+Penso que o game poderia ser **portado para um display maior**, talvez um display LCD 4x20 ou então algum outro hardware que acomode melhor as múltiplas funções do jogo. </br>
+O game pode ser **otimizado**, conforme comentei no início do documento, bem como podem ser implementados novos níveis, novos inimigos, etc.. </br>
+Além disso, tendo em vista a implementação em hardware mais apropriado, seria interessante **desenvolver novos níveis e um sistema de contagem de pontos.** </br>
+**Não pretendo lançar muitos updates para o game. Não nesse momento, pelo menos, pois estou envolvido em outros projetos e esse é um projeto bastante antigo. Todavia, caso tenha alguma contribuição, por gentileza, faça e me avise, ficarei muito feliz em ver. :))**
 
 ## Direitos
 
