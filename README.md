@@ -1,49 +1,50 @@
-# PIC INVADERS
+#PIC INVADERS
 
-## A proposta
+##The purpose
 
-Projeto de um jogo estilo _Space Invaders_ para plataforma PIC. </br>
-O projeto contempla descrições de **hardware e software**, utilizando um microcontrolador PIC18F45K22, da Microchip. 
+This project is develop a game in Space Invaders style. It is some kind of Space Invaders for PIC platform. </br>
+The project includes **hardware and software** descriptions, using a PIC18F45K22 microcontroller from Microchip.
 
-PIC INVADERS foi desenvolvido **como projeto pessoal, quando estava entre meu 3º e 4º semestre do curso de Engenharia Elétrica na UFSM.**. Portanto, deixo claro que se fizesse o mesmo código **hoje em dia, com certeza muita coisa seria melhorada e otimizada.** 
+PIC INVADERS was developed as a **personal project when I was between my 3rd and 4th semester of the Electrical Engineering at UFSM.** So I would like to make it clear that if I would develop the same code today, certainly a lot of things would be different, improved and optimized.
 
-O projeto foi desenvolvido incialmente utilizando a plataforma CUSCO-PIC, desenvolvida em **Caxias do Sul**. </br>
-Mas também fora montado com **hardware dedicado e tudo funcionou perfeitamente**. </br>
-Ainda assim, darei algumas dicas de como **montar seu próprio hardware** para rodar o game. :)
+The project was developed initially using CUSCO-PIC platform, hardware platform developed in **Caxias do Sul**.
+However, it was also mounted in **dedicated hardware, and everything worked perfectly**. </br>
+Still, I will give some tips on how to **build your own hardware** to run the game. :)
 
-## Informações Úteis
+##Useful Information
 
-O código foi desenvolvido especificamente para microcontroladores da **Microchip**. 
+The code was developed specifically for **Microchip** microcontrollers.
 
-Entretanto, sendo feitas algumas modificações de inicalização e configuração de alguns registradores (principalmente de entrada e saída), e configurações do display LCD, o projeto pode ser adaptado para outros microcontroladores, de outros fabricantes. 
+However, with certain changes in initialization configuration files, registers (mainly input and output), and settings of the LCD display, the design can be adapted to other microcontrollers from other manufacturers.
 
-Sobretudo, foi desenvolvido com foco nas **plataformas PIC**. </br>
-O projeto foi todo **desenvolvido em C**, utilizando um microcontrolador da **família 18F**. </br>
+Above all, it was developed with a focus on PIC platforms. </br>
+The project was developed **entirely in C**, using a **18F family microcontroller**. </br>
 
-## Como funciona o game?
+##How the game works?
 
-O jogo é composto de uma _IHM_ e alguns botões que permitem ao usuário controlar sua nave. </br>
-A nave do jogador pode ir **para cima**, **para baixo** e **atirar** contra as naves inimigas. </br>
-O game contém 4 botões, sendo o botão UP, DOWN, FIRE e SPECIAL. </br> 
+The game consists of an Human Machine Interface (IHM) and some buttons that allow the user to control your ship. </br>
+The player ship can go up, down and shoot enemy ships. </br>
+The game contains 4 buttons: UP, DOWN, FIRE and SPECIAL. </br>
+	
+*- The .c files contains the developed software in C* </br>
+*- The .h files are the headers of .c files * </br>
+*- The .asm file contains the code translated to assembly language* </br>
+*- The .hex file is the ready to burn file, containing the code in hexadecimal language. </br>
+*- Inside /Proteus folder it is the project hardware schematic.* </br>
 
-*- Os arquivos .c contém o código desenvolvido utilizando C.* </br>
-*- Os arquivos .h são os cabeçalhos dos arquivos .c* </br>
-*- O arquivo .asm contém o código traduzido para linaguagem de montagem. (assembly)* </br>
-*- O arquivo .hex é o arquivo com formato para ser gravado no microcontrolador, que é traduzido para linguagem de máquina e interpretado.* </br>
-*- Dentro da pasta hardware, estão os arquivos de simulação utilizando o software Proteus.* </br>
+The .c and .h files:
 
-Os arquivos .c e .h:
+*- menu.c e menu.h --> Files responsible for creating function of the game menu.* </br>
+*- naveAtaques.c e naveAtaques.h --> Functions responsible for the creation of enemies.* </br>
+*- gameControle.c e gameControle.h --> Control game functions, like Win, GameOver, etc..* </br>
+*- funcoesAdicionais. e funcoesAdicionais.h --> Extra functions, like CustomChar() and Random()* </br>
 
-*- menu.c e menu.h --> Arquivos responsáveis pela função de criação do menu do game.* </br>
-*- naveAtaques.c e naveAtaques.h --> Funções responsáveis pela criação dos inimigos.* </br>
-*- gameControle.c e gameControle.h --> Funções de controle do jogo, como Win, GameOver, etc..* </br>
-*- funcoesAdicionais. e funcoesAdicionais.h --> Funcoes extras, como CustomChar() e Random()* </br>
+To simulate the game, just open the workspace on /hardware folder using Proteus software. </br>
+Double-click on the microcontroller and import the .hex file.
 
-Para simular o jogo, basta abrir o _workspace_ da pasta **hardware** com o software _Proteus_, clicar duas vezes no microcontrolador e importar o arquivo '.hex'.
+##Which was used in the project?
 
-## O que foi utilizado no projeto?
-
-**Lista de componentes utilizados no projeto (para montagem em placa universal ou em PCB):**
+**List of materials (considering mounting in an universal board or PCB):**
 
 1. 1 x Microcontrolador PIC18F45K22 <br>
 2. 1 x Soquete 40 pinos </br>
@@ -58,23 +59,23 @@ Para simular o jogo, basta abrir o _workspace_ da pasta **hardware** com o softw
 
 Caso o circuito seja montado:
 
-1. **Não esquecer de alimentar o microcontrolador em suas 2 entradas (2xGND e 2xVCC)**
-2. **Não esquecer de aterrar os pinos não utilizados pelo display LCD.**
-3. **Não esquecer de colocar o botão referente ao RESET, ou então manter o pino MCLR do microcontrolador em nível lógico alto.**
+1. **Do not forget to feed the microcontroller in its 2 different pins (2xGND e 2xVCC)**
+2. **Do not forget to put 0V on the LCD not used pins.**
+3. **Do not forget RESET button, or keep the MCLR microcontroller pin in HIGH STATE.**
 
-## Como Jogar?
+##How to play?
 
-Logo que o game é iniciado, conta-se uma breve história do enredo do game, em seguida, o usuário pode verificar os botões de controle (**Help**), ler sobre as informações de desenvolvimento do game (**About**), ou então dar um **New Game**. </br>
-Cada um dos botões é responsável por acessar um conteúdo diferente (New Game, About e Help), e um dos botões é o botão "Voltar".
+Once the game starts, tells a brief history of the game's plot, then the user can check the control buttons (**Help**), read on the game development information (**About**), or take a **New Game**. </br>
+Each button is responsible for accessing different content (New Game, About and Help), and one of the buttons is the "Back" button.
 
-Caso alguma nave inimiga cruze os 16 caracteres da tela ou a nave do jogador é atingida por um tiro, é **Game Over**. </br>
-Após derrotar alguns inimigos aleatórios, aparece um boss final, que tem um jeito único de ser derrotado e eu não vou contar aqui :). </br>
+If any enemy ship cross the 16 screen characters or the player's ship is hit by a shot, it's **Game Over**.</br>
+After defeating some random enemies, it appears a final boss, who has a unique way of being defeated and I will not tell here :). </br>
 
-Quando **Game Over**, é apaga a RAM do microcontrolador, e o game é reiniciado. (essa função pode não funcionar em simulação)
+When **Game Over**, the microcontroller RAM is erased, and the game is restarted. (This function may not work in simulation)
 
-Abaixo, ficam algumas imagens do hardware montado no software Proteus, e do seu funcionamento quando em simulação.
+Below are some pictures of the hardware mounted in Proteus software, and its operation during simulation.
 
-**Hardware montado em software e sendo simulado:**
+**Hardware mounted in Proteus software**
 
 ![Imgur](http://i.imgur.com/GbyrLvf.png) 
 
@@ -84,19 +85,19 @@ Abaixo, ficam algumas imagens do hardware montado no software Proteus, e do seu 
 
 ![Imgur](http://i.imgur.com/AgxpiH6.png) 
 
-## Implementações Futuras
+##Future Implementations
 
-**O que poderia ser melhorado?** </br>
+**What could be enhanced?** </br>
 
-- Penso que o game poderia ser **portado para um display maior**, talvez um display LCD 4x20 ou então algum outro hardware que acomode melhor as múltiplas funções do jogo. </br>
-- O game pode ser **otimizado**, conforme comentei no início do documento, bem como podem ser implementados novos níveis, novos inimigos, etc.. </br>
-- Além disso, tendo em vista a implementação em hardware mais apropriado, seria interessante **desenvolver novos níveis e um sistema de contagem de pontos.** </br>
-- **Não pretendo lançar muitos updates para o game. Não nesse momento, pelo menos, pois estou envolvido em outros projetos e esse é um projeto bastante antigo. Todavia, caso tenha alguma contribuição, por gentileza, faça e me avise, ficarei muito feliz em ver. :))**
+- I think that the game could be **ported to a larger display**, maybe a 4x20 LCD display and then some other hardware that best accommodate the multiple functions of the game. </br>
+- The game can be **optimized**, as I said at the beginning of the document and can be implemented new levels, new enemies, etc .. </br>
+- Furthermore, in order to implement more appropriate hardware, it would be interesting to **develop new levels and point counting system.** </br>
+- I do not intend to release many updates to the game. Not now, at least, because I am involved in other projects and this is a very old one. However, if you have any contribution, please, please let me know and I shall be very happy to see. :))**
 
-## Direitos
+##Copyrights
 
-**O projeto pode ser reproduzido sem problema algum.** </br>
-Entretanto, caso isso seja feito, apenas peço para manterem/referenciarem **créditos ao autor**.
+**The project can be reproduced without any problems.** </br>
+However, I only ask you to keep **credits to the author**. </br>
 
 
 Enjoy!
