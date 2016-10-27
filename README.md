@@ -2,7 +2,7 @@
 
 ##The purpose
 
-This project is develop a game in Space Invaders style. It is some kind of Space Invaders for PIC platform. </br>
+This project is the development of a Space Invaders style game. It is some kind of Space Invaders, but, for Microchip PIC platform. </br>
 The project includes **hardware and software** descriptions, using a PIC18F45K22 microcontroller from Microchip.
 
 PIC INVADERS was developed as a **personal project when I was between my 3rd and 4th semester of the Electrical Engineering at UFSM.** So I would like to make it clear that if I would develop the same code today, certainly a lot of things would be different, improved and optimized.
