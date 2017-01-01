@@ -2,7 +2,7 @@
 
 ##The purpose
 
-This project is the development of a Space Invaders style game. It is some kind of Space Invaders, but, for Microchip PIC platform. </br>
+**This project is the development of a Space Invaders style game. It is some kind of Space Invaders, but, for Microchip PIC platform.** </br>
 
 The project includes **hardware and software** descriptions, using a PIC18F45K22 microcontroller from Microchip.
 
@@ -26,7 +26,9 @@ The project was developed **entirely in C**, using a **18F family microcontrolle
 The game consists of an Human Machine Interface (IHM) and some buttons that allow the user to control your ship. </br>
 The player ship can go up, down and shoot enemy ships. </br>
 The game contains 4 buttons: UP, DOWN, FIRE and SPECIAL. </br>
-	
+
+**File types in project:**
+
 *- The .c files contains the developed software in C* </br>
 *- The .h files are the headers of .c files* </br>
 *- The .asm file contains the code translated to assembly language* </br>
@@ -45,7 +47,7 @@ Double-click on the microcontroller and import the .hex file.
 
 ##Which was used in the project?
 
-**List of materials (considering mounting in an universal board or PCB):**
+**Bill of materials (considering mounting in an universal board or PCB):**
 
 1. 1 x PIC18F45K22 microcontroller <br>
 2. 1 x 40 pins header </br>
@@ -58,7 +60,7 @@ Double-click on the microcontroller and import the .hex file.
 9. 1 x LCD 2x16 </br>
 10. 1 x 9V battery wired connector </br>
 
-If the circuit is mounted:
+In case of building the circuit:
 
 1. **Do not forget to feed the microcontroller in its 2 different pins (2xGND e 2xVCC)**
 2. **Do not forget to put 0V on the LCD not used pins.**
@@ -78,11 +80,19 @@ Below are some pictures of the hardware mounted in Proteus software, and its ope
 
 **Hardware mounted in Proteus software:**
 
+*Welcome screen:*
+
 ![Imgur](http://i.imgur.com/GbyrLvf.png) 
+
+*Main screen:*
 
 ![Imgur](http://i.imgur.com/3AJewfv.png) 
 
+*The game is running o/:*
+
 ![Imgur](http://i.imgur.com/XVyv2A0.png) 
+
+*You failed! Game Over. :(*
 
 ![Imgur](http://i.imgur.com/AgxpiH6.png) 
 
