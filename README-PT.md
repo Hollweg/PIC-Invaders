@@ -1,6 +1,6 @@
-#PIC INVADERS
+# PIC INVADERS
 
-##A proposta
+## A proposta
 
 Projeto de um jogo estilo _Space Invaders_ para plataforma PIC. </br>
 O projeto contempla descrições de **hardware e software**, utilizando um microcontrolador PIC18F45K22, da Microchip. 
@@ -11,7 +11,7 @@ O projeto foi desenvolvido incialmente utilizando a plataforma CUSCO-PIC, desenv
 Mas também fora montado com **hardware dedicado e tudo funcionou perfeitamente**. </br>
 Ainda assim, darei algumas dicas de como **montar seu próprio hardware** para rodar o game. :)
 
-##Informações Úteis
+## Informações Úteis
 
 O código foi desenvolvido especificamente para microcontroladores da **Microchip**. 
 
@@ -20,7 +20,7 @@ Entretanto, sendo feitas algumas modificações de inicalização e configuraç�
 Sobretudo, foi desenvolvido com foco nas **plataformas PIC**. </br>
 O projeto foi todo **desenvolvido em C**, utilizando um microcontrolador da **família 18F**. </br>
 
-##Como funciona o game?
+## Como funciona o game?
 
 O jogo é composto de uma _IHM_ e alguns botões que permitem ao usuário controlar sua nave. </br>
 A nave do jogador pode ir **para cima**, **para baixo** e **atirar** contra as naves inimigas. </br>
@@ -41,7 +41,7 @@ Os arquivos .c e .h:
 
 Para simular o jogo, basta abrir o _workspace_ da pasta **hardware** com o software _Proteus_, clicar duas vezes no microcontrolador e importar o arquivo '.hex'.
 
-##O que foi utilizado no projeto?
+## O que foi utilizado no projeto?
 
 **Lista de componentes utilizados no projeto (para montagem em placa universal ou em PCB):**
 
@@ -62,7 +62,7 @@ Caso o circuito seja montado:
 2. **Não esquecer de aterrar os pinos não utilizados pelo display LCD.**
 3. **Não esquecer de colocar o botão referente ao RESET, ou então manter o pino MCLR do microcontrolador em nível lógico alto.**
 
-##Como Jogar?
+## Como Jogar?
 
 Logo que o game é iniciado, conta-se uma breve história do enredo do game, em seguida, o usuário pode verificar os botões de controle (**Help**), ler sobre as informações de desenvolvimento do game (**About**), ou então dar um **New Game**. </br>
 Cada um dos botões é responsável por acessar um conteúdo diferente (New Game, About e Help), e um dos botões é o botão "Voltar".
@@ -91,7 +91,7 @@ Abaixo, ficam algumas imagens do hardware montado no software Proteus, e do seu 
 
 ![Imgur](http://i.imgur.com/AgxpiH6.png) 
 
-##Implementações Futuras
+## Implementações Futuras
 
 **O que poderia ser melhorado?** </br>
 
@@ -100,7 +100,7 @@ Abaixo, ficam algumas imagens do hardware montado no software Proteus, e do seu 
 - Além disso, tendo em vista a implementação em hardware mais apropriado, seria interessante **desenvolver novos níveis e um sistema de contagem de pontos.** </br>
 - **Não pretendo lançar muitos updates para o game. Não nesse momento, pelo menos, pois estou envolvido em outros projetos e esse é um projeto bastante antigo. Todavia, caso tenha alguma contribuição, por gentileza, faça e me avise, ficarei muito feliz em ver. :))**
 
-##Direitos
+## Direitos
 
 **O projeto pode ser reproduzido sem problema algum.** </br>
 Entretanto, caso isso seja feito, apenas peço para manterem/referenciarem **créditos ao autor**.

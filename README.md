@@ -1,6 +1,6 @@
-#PIC INVADERS
+# PIC INVADERS
 
-##The purpose
+## The purpose
 
 **This project is the development of a Space Invaders style game. It is some kind of Space Invaders, but, for Microchip PIC platform.** </br>
 
@@ -12,7 +12,7 @@ The project was developed initially using CUSCO-PIC platform, hardware platform 
 However, it was also mounted in **dedicated hardware, and everything worked perfectly**. </br>
 Still, I will give some tips on how to **build your own hardware** to run the game. :)
 
-##Useful Information
+## Useful Information
 
 The code was developed specifically for **Microchip** microcontrollers.
 
@@ -21,7 +21,7 @@ However, with **certain changes in initialization configuration files, registers
 Above all, it was developed with a focus on PIC platforms. </br>
 The project was developed **entirely in C**, using a **18F family microcontroller**. </br>
 
-##How the game works?
+## How the game works?
 
 The game consists of an Human Machine Interface (IHM) and some buttons that allow the user to control your ship. </br>
 The player ship can go up, down and shoot enemy ships. </br>
@@ -45,7 +45,7 @@ The .c and .h files:
 To **simulate the game**, just open the workspace on /**hardware folder using Proteus software.** </br>
 Double-click on the microcontroller and import the .hex file.
 
-##Which was used in the project?
+## Which was used in the project?
 
 **Bill of materials (considering mounting in an universal board or PCB):**
 
@@ -66,7 +66,7 @@ In case of building the circuit:
 2. **Do not forget to put 0V on the LCD not used pins.**
 3. **Do not forget RESET button, or keep the MCLR microcontroller pin in HIGH STATE.**
 
-##How to play?
+## How to play?
 
 Once the game starts, tells a brief history of the game's plot, then the user can check the control buttons (**Help**), read on the game development information (**About**), or take a **New Game**. </br>
 Each button is responsible for accessing different content (New Game, About and Help), and one of the buttons is the "Back" button.
@@ -96,7 +96,7 @@ Below are some pictures of the hardware mounted in Proteus software, and its ope
 
 ![Imgur](http://i.imgur.com/AgxpiH6.png) 
 
-##Future Implementations
+## Future Implementations
 
 **What could be enhanced?** </br>
 
@@ -105,7 +105,7 @@ Below are some pictures of the hardware mounted in Proteus software, and its ope
 - Furthermore, in order to implement more appropriate hardware, it would be interesting to **develop new levels and point counting system.** </br>
 - **I do not intend to release many updates to the game. Not now, at least, because I am involved in other projects and this is a very old one. However, if you have any contribution, please, please let me know and I shall be very happy to see. :))**
 
-##Copyrights
+## Copyrights
 
 **The project can be reproduced without any problems.** </br>
 However, I only ask you to keep **credits to the author**. </br>
